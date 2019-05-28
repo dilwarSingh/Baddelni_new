@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        tools:layout_editor_absoluteY="25dp">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/backBt"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:id="@+id/avaliablePostLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/requestLL"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage">
+
+            <TextView
+                android:id="@+id/avaliableBost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/gradient2"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="154dp"
+                tools:layout_editor_absoluteY="8dp"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/avaliablePostBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/available_posts"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="120dp"
+                tools:layout_editor_absoluteY="37dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/requestLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/avaliablePostLL"
+            app:layout_constraintEnd_toStartOf="@+id/myrequestLL"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/avaliablePostLL">
+
+            <TextView
+                android:id="@+id/requests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:textColor="@color/gradient2"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="253dp"
+                tools:layout_editor_absoluteY="8dp"
+                tools:text="9" />
+
+            <TextView
+                android:id="@+id/requestBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/requests"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="234dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/myrequestLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/requestLL"
+            app:layout_constraintEnd_toStartOf="@+id/likesLL"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/requestLL">
+
+            <TextView
+                android:id="@+id/myrequests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:textColor="@color/gradient2"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="253dp"
+                tools:layout_editor_absoluteY="8dp"
+                tools:text="9" />
+
+            <TextView
+                android:id="@+id/myrequestBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/myRequest"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="234dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/likesLL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/myrequestLL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/myrequestLL">
+
+            <ImageView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/heart"
+                android:clickable="false"
+                android:focusable="false"
+                android:padding="2dp"
+                tools:layout_editor_absoluteX="305dp"
+                tools:layout_editor_absoluteY="11dp" />
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:clickable="false"
+                android:focusable="false"
+                android:gravity="center"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="305dp"
+                tools:layout_editor_absoluteY="37dp"
+                tools:text="23" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/accountBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rounded_transparent"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center"
+            android:minWidth="80dp"
+            android:padding="4dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="@string/my_account"
+            android:textColor="@color/gradient2"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/chatBt"
+            app:layout_constraintStart_toEndOf="@+id/text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="8dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+            app:layout_constraintStart_toEndOf="@+id/profileImage"
+            app:layout_constraintTop_toTopOf="@+id/profileImage"
+            tools:text="User-Name" />
+
+        <ImageView
+            android:id="@+id/backBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="4dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profileImage"
+            app:srcCompat="@drawable/back_brown" />
+
+        <TextView
+            android:id="@+id/notificationsBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/primary_notification"
+            android:drawablePadding="4dp"
+            android:text="@string/notifications"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settingsBt"
+            app:layout_constraintEnd_toStartOf="@+id/settingsBt"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/settingsBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/primary_settings"
+            android:drawablePadding="4dp"
+            android:text="@string/settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/notificationsBt"
+            app:layout_constraintTop_toBottomOf="@+id/avaliablePostLL" />
+
+        <ImageButton
+            android:id="@+id/accountBt2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@color/transparent"
+            android:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/profileImage"
+            app:srcCompat="@drawable/add_account" />
+
+        <ImageButton
+            android:id="@+id/chatBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@color/transparent"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/accountBt2"
+            app:layout_constraintEnd_toStartOf="@+id/accountBt2"
+            app:srcCompat="@drawable/chat" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

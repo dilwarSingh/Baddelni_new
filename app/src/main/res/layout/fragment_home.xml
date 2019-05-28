@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/profileImg"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/account_selected"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="User-name"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/profileImg"
+                        app:layout_constraintEnd_toStartOf="@+id/chatBt"
+                        app:layout_constraintStart_toEndOf="@+id/profileImg"
+                        app:layout_constraintTop_toTopOf="@+id/profileImg" />
+
+                    <ImageView
+                        android:id="@+id/settingsBt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/username"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/username"
+                        app:srcCompat="@drawable/primary_settings" />
+
+                    <ImageView
+                        android:id="@+id/notificationsBt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/settingsBt"
+                        app:layout_constraintEnd_toStartOf="@+id/settingsBt"
+                        app:layout_constraintTop_toTopOf="@+id/settingsBt"
+                        app:srcCompat="@drawable/black_notification" />
+
+                    <ImageView
+                        android:id="@+id/chatBt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/notificationsBt"
+                        app:layout_constraintEnd_toStartOf="@+id/notificationsBt"
+                        app:layout_constraintTop_toTopOf="@+id/notificationsBt"
+                        app:srcCompat="@drawable/chat" />
+
+                    <EditText
+                        android:id="@+id/searchET"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/home_search_bg"
+                        android:drawableEnd="@drawable/filter"
+                        android:ems="10"
+                        android:hint="@string/what_are_you_looking_for"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textPersonName"
+                        android:padding="12dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/profileImg"
+                        app:layout_constraintTop_toBottomOf="@+id/profileImg"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/categoriesBt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:drawableStart="@drawable/categories"
+                        android:drawablePadding="12dp"
+                        android:text="@string/categories"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView22"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/searchET" />
+
+                    <ImageView
+                        android:id="@+id/imageView22"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/categoriesBt"
+                        app:layout_constraintEnd_toStartOf="@+id/sellingBt"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/categoriesBt"
+                        app:layout_constraintTop_toTopOf="@+id/categoriesBt"
+                        app:srcCompat="@color/greyGradient2" />
+
+                    <TextView
+                        android:id="@+id/sellingBt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/small_camera"
+                        android:drawablePadding="12dp"
+                        android:text="Selling Items"
+                        android:visibility="invisible"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/categoriesBt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/imageView22" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView15">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/quickInclude"
+                        layout="@layout/layout_home_top"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/quickRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/quickInclude" />
+
+                    <ss.com.bannerslider.views.BannerSlider
+                        android:id="@+id/adsSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:visibility="visible"
+                        app:animateIndicators="true"
+                        app:defaultBanner="1"
+                        app:defaultIndicators="circle"
+                        app:indicatorSize="6dp"
+                        app:interval="4000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/quickRecycler"
+                        app:loopSlides="true" />
+
+                    <android.support.constraint.Group
+                        android:id="@+id/quickView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:constraint_referenced_ids="quickRecycler,quickInclude" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView8">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/intrestInclude"
+                        layout="@layout/layout_home_top"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/yourIntrest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/intrestInclude"
+                        app:spanCount="3" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView9">
+
+                <include
+                    android:id="@+id/latestInclude"
+                    layout="@layout/layout_home_top"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/latestRecycler"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/latestInclude" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView10"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout2">
+
+                <ss.com.bannerslider.views.BannerSlider
+                    android:id="@+id/adsRecycleSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:animateIndicators="true"
+                    app:defaultBanner="1"
+                    app:defaultIndicators="circle"
+                    app:indicatorSize="6dp"
+                    app:interval="4000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loopSlides="true" />
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView45"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView10">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        android:id="@+id/nearInclude"
+                        layout="@layout/layout_home_top"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/topCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/nearInclude"
+                        app:spanCount="3" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCreatePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        app:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_pencil" />
+
+</android.support.constraint.ConstraintLayout>

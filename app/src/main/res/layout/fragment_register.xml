@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shakehand_bg_white_tint">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="32dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="32dp" />
+
+    <ImageButton
+        android:id="@+id/backBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:padding="4dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_brown" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/create_account"
+        android:textColor="@color/blackText"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/backBt" />
+
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="text|textCapWords"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:ems="10"
+        android:hint="@string/e_mail"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/country"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
+
+    <TextView
+        android:id="@+id/country"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:drawableEnd="@drawable/down_arrow"
+        android:elevation="3dp"
+        android:ems="10"
+        android:hint="@string/country"
+        android:inputType="none"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:ems="10"
+        android:hint="@string/phone_number"
+        android:inputType="phone"
+        android:padding="12dp"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/country" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/genderTv"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/phone" />
+
+    <TextView
+        android:id="@+id/genderTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_text_bg"
+        android:drawableEnd="@drawable/down_arrow"
+        android:elevation="3dp"
+        android:ems="10"
+        android:hint="@string/gender_optional"
+        android:inputType="none"
+        android:padding="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/signinBt"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <!--  <android.support.constraint.ConstraintLayout
+        android:id="@+id/genderView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/signinBt"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/guideline">
+
+        <CheckBox
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:button="@drawable/selection_female"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/male"
+            app:layout_constraintEnd_toStartOf="@+id/female"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/male"
+            app:layout_constraintTop_toTopOf="@+id/male"
+            app:srcCompat="@color/greyText" />
+
+        <CheckBox
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:button="@drawable/selection_male"
+            android:checked="true"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="@+id/female"
+            app:layout_constraintStart_toStartOf="@+id/female" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/male"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/male"
+            app:layout_constraintStart_toStartOf="@+id/male"
+            app:layout_constraintTop_toBottomOf="@+id/male" />
+    </android.support.constraint.ConstraintLayout>
+-->
+    <Button
+        android:id="@+id/signinBt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:padding="18dp"
+        android:text="@string/next"
+        android:textColor="@color/whiteText"
+        app:layout_constraintBottom_toTopOf="@+id/loginText"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="@string/already_have_account_log_in_here"
+        android:textColor="@color/blackText"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <!-- <TextView
+         android:id="@+id/termOfUse"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:gravity="center"
+         android:text="@string/privacyText"
+         android:textColor="#00F"
+         android:textSize="16sp"
+         app:layout_constraintBottom_toTopOf="@+id/privacyText"
+         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+     <TextView
+         android:id="@+id/privacyText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="8dp"
+         android:text="@string/and_privacy_policy"
+         android:textColor="#00F"
+         app:layout_constraintBottom_toTopOf="@+id/loginText"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.5"
+         app:layout_constraintStart_toStartOf="parent" />
+ -->
+
+</android.support.constraint.ConstraintLayout>

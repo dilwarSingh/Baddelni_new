@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#C89D1C</color>
+    <color name="colorPrimaryDark">#ab830b</color>
+    <color name="colorAccent">#c89d1c</color>
+
+    <color name="blackText">#272727</color>
+    <color name="black">#000000</color>
+    <color name="gradient1">#dfca8d</color>
+    <color name="gradient2">#c89d1c</color>
+    <color name="greyTextBg">#EFEFEF</color>
+    <color name="greyText">#808080</color>
+    <color name="purpleText">#0A0819</color>
+    <color name="whiteText">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="fb_blue">#2D509B</color>
+    <color name="lightTranspatentWhite">#b9ffffff</color>
+    <color name="lightTransparentBlack">#19000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="green">#48d260</color>
+    <color name="red">#f13b27</color>
+    <color name="redTransparent">#ffb5ad</color>
+    <color name="lightRed">#ffcec9</color>
+
+    <color name="greyGradient1">#8E8E93</color>
+    <color name="greyGradient2">#D4D3D2</color>
+    <color name="light_text_color">#b6b6b6</color>
+</resources>

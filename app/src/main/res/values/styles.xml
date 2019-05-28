@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="editTextStyle">@style/myEditTextStyle</item>
+        <item name="android:screenOrientation">portrait</item>
+
+        <item name="android:textAppearance">@style/myTextStyle</item>
+        <item name="android:textViewStyle">@style/myTextStyle</item>
+    </style>
+
+    <style name="myEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/greyText</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:fontFamily">@font/cairo</item>
+    </style>
+
+    <style name="myTextStyle" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/cairo</item>
+    </style>
+
+    <style name="CardViewAccount" parent="CardView">
+        <item name="cardElevation">4dp</item>
+    </style>
+
+</resources>

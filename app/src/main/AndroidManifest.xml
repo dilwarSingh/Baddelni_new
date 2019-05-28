@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.baddelni.baddelni">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
+        <activity android:name=".loginRegister.GuestLoginActivity"></activity>
+
+        <service android:name=".fcm_services.MyFirebaseMessageingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loginRegister.LoginRegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loginRegister.interests.InterestsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.ExchangeDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.RequestsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".packageSection.BuyPackageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".packageSection.CreatePostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".categories.SubCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".categories.ProductDetailActivity"
+            android:screenOrientation="portrait">
+
+            <!--
+                    <tools:validation testUrl="https://www.baddelni.com/product/22" />
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
+
+                    <data
+                        android:scheme="https"
+                        android:host="www.baddelni.com"
+                        android:pathPrefix="/product" />
+                </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".account.TipsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".account.FavoritesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.SettingsExplain"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loginRegister.ForgotPassword"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".packageSection.MakeOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.ContactUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.ContactUsNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".categories.ImageListSliderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".packageSection.PaymentWebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".intro.IntroActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".chat.ChatListActivity" />
+        <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".intro.AdActivity" />
+        <activity android:name=".packageSection.EditPostActivity" />
+    </application>
+
+</manifest>

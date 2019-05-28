@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="7dp"
+        app:cardUseCompatPadding="true">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/shareBt"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/product_name"
+                android:textColor="@color/gradient1"
+                app:layout_constraintStart_toEndOf="@+id/image"
+                app:layout_constraintTop_toTopOf="@+id/image" />
+
+            <ImageView
+                android:id="@+id/menuBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/three_dots" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:text="Product description"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <TextView
+                android:id="@+id/source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/exchange"
+                android:drawablePadding="8dp"
+                android:text="Baddelni"
+                android:textColor="@color/gradient2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/product1Img"
+                app:layout_constraintStart_toStartOf="@+id/description"
+                app:layout_constraintTop_toTopOf="@+id/product1Img" />
+
+            <ImageView
+                android:id="@+id/product1Img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/product2Img"
+                app:layout_constraintTop_toTopOf="@+id/product2Img"
+                tools:srcCompat="@drawable/male_selected" />
+
+            <ImageView
+                android:id="@+id/product2Img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                tools:srcCompat="@drawable/female_selected" />
+
+            <CheckedTextView
+                android:id="@+id/saveBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:checked="false"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/heart_selector"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="@string/save"
+                android:textSize="12sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/shareBt"
+                app:layout_constraintEnd_toStartOf="@+id/menuBt" />
+
+            <TextView
+                android:id="@+id/shareBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/share"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="@string/share"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/saveBt"
+                app:layout_constraintEnd_toStartOf="@+id/saveBt"
+                app:layout_constraintTop_toTopOf="@+id/saveBt"
+                app:srcCompat="@color/gradient1" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

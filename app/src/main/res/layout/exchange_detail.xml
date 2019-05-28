@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/profileImg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/profileImg"
+        app:layout_constraintTop_toTopOf="@+id/profileImg"
+        tools:text="@string/user_name" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/location"
+        android:drawablePadding="4dp"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/phoneNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_transparent"
+        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/location"
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        tools:text="+91 123456789" />
+
+    <include
+        android:id="@+id/product1"
+        layout="@layout/layout_product_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/imageCard"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/greyTextBg"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/product2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/product1">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/exchange" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <include
+        android:id="@+id/product2"
+        layout="@layout/layout_product_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/acceptBt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageCard" />
+
+    <ImageButton
+        android:id="@+id/backBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/transparent"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profileImage"
+        app:srcCompat="@drawable/back_brown" />
+
+
+    <Button
+        android:id="@+id/declineBt"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-4dp"
+        android:background="@color/red"
+        android:drawableStart="@drawable/close"
+        android:drawablePadding="8dp"
+        android:padding="12dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/decline"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteText"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/acceptBt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/acceptBt" />
+
+    <Button
+        android:id="@+id/acceptBt"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-4dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/green"
+        android:drawableEnd="@drawable/tick"
+        android:drawablePadding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/accept"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteText"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/declineBt"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/backBt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/account_selected" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="User name"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        app:layout_constraintTop_toTopOf="@+id/profileImage" />
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/left_round_primary"
+        android:padding="4dp"
+        android:text="@string/request"
+        android:textColor="@color/whiteText"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:tint="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/username"
+        app:srcCompat="@drawable/phone" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:tint="@color/colorAccent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+        app:layout_constraintEnd_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toTopOf="@+id/imageView16"
+        app:srcCompat="@drawable/chat"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/imageView16"
+        app:layout_constraintStart_toStartOf="@+id/profileImg"
+        app:layout_constraintTop_toBottomOf="@+id/profileImg" />
+
+</android.support.constraint.ConstraintLayout>
