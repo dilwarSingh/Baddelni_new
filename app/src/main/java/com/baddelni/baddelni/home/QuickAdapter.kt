@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.home.MyProductsItem
 import com.baddelni.baddelni.categories.ProductDetailActivity
-import com.baddelni.baddelni.packageSection.CreatePostActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -24,30 +23,29 @@ class QuickAdapter(val context: Context, val list: List<MyProductsItem>) : Recyc
     }
 
     override fun onBindViewHolder(holder: viewHolder, postion: Int) {
-            val data = list[postion]
+        val data = list[postion]
 
-            val ro = RequestOptions()
-                    .centerCrop()
-            ro.diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-            ro.placeholder(R.mipmap.ic_launcher)
+        val ro = RequestOptions()
+                .centerCrop()
+        ro.diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        ro.placeholder(R.mipmap.ic_launcher)
 
-            Glide.with(context)
-                    .applyDefaultRequestOptions(ro)
-                    .load(data.mainImage?.img!!)
-                    .into(holder.image)
+        Glide.with(context)
+                .applyDefaultRequestOptions(ro)
+                .load(data.mainImage?.img!!)
+                .into(holder.image)
 
-            holder.text.text = data.name
-            holder.text.setTextColor(context.resources.getColor(R.color.black))
+        holder.text.text = data.name
+        holder.text.setTextColor(context.resources.getColor(R.color.black))
 
-            holder.itemView.setOnClickListener {
-                val intent = Intent(context, ProductDetailActivity::class.java)
-                intent.putExtra("pId", list[holder.adapterPosition].id as Int)
-                intent.putExtra("isFav", list[holder.adapterPosition].fav.isFavorite())
-                intent.putExtra("isMy", true)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ProductDetailActivity::class.java)
+            intent.putExtra("pId", list[holder.adapterPosition].id as Int)
+            intent.putExtra("isFav", list[holder.adapterPosition].fav.isFavorite())
+            intent.putExtra("isMy", true)
 
-                context.startActivity(intent)
-            }
-
+            context.startActivity(intent)
+        }
 
 
     }

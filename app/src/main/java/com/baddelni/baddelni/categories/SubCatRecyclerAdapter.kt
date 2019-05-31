@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.categories.SubCategoryItem
+import com.bumptech.glide.Glide
 
 class SubCatRecyclerAdapter(val context: Context, val list: List<SubCategoryItem>, val productListAdapter: AdapterSubCategory) : RecyclerView.Adapter<SubCatRecyclerAdapter.ViewHolder>() {
 
@@ -21,8 +22,14 @@ class SubCatRecyclerAdapter(val context: Context, val list: List<SubCategoryItem
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(vh: SubCatRecyclerAdapter.ViewHolder, postion: Int) {
-        vh.title.text = list[postion].subCategory
-        vh.image.visibility = View.GONE
+        val data = list[postion]
+        vh.title.text = data.subCategory
+
+        Glide.with(vh.image)
+                .load(data.img)
+                .into(vh.image)
+
+
         vh.itemView.setOnClickListener {
             productListAdapter.filter.filter(list[postion].id.toString())
         }

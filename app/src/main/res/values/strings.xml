@@ -199,5 +199,6 @@
     <string name="sureLogin">Are you sure want to Login?</string>
     <string name="selling_items">Selling Items</string>
     <string name="price">Price</string>
+    <string name="successfuly_republished">Successfully Republished</string>
 
 </resources>

@@ -34,6 +34,7 @@ import com.baddelni.baddelni.util.CommonObjects
 import com.baddelni.baddelni.util.GlobalSharing
 import com.baddelni.baddelni.util.YesNoInterface
 import kotlinx.android.synthetic.main.activity_edit_post_new.*
+import kotlinx.android.synthetic.main.activity_edit_post_new.detail
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -86,6 +87,8 @@ class EditPostActivity : AppCompatActivity() {
     var countryId: Int? = null
 
     var sectionSize = 0
+    var oldImageIds: MutableList<String> = listOf<String>().toMutableList()
+    var oldProductsIds: MutableList<String> = listOf<String>().toMutableList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,11 +96,10 @@ class EditPostActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_create_post)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_post_new)
         getCategoriesData()
-        getData()
         postCount.text = "${GlobalSharing.postCount} ${getString(R.string.posts)}"
 
         addOther.visibility = GONE
-        cardView301.visibility = GONE
+        //      cardView301.visibility = GONE
         badImage.visibility = GONE
         textView241.visibility = GONE
         backBt.setOnClickListener { finish() }
@@ -247,8 +249,7 @@ class EditPostActivity : AppCompatActivity() {
                 body?.apply {
                     if (code!!.isSuccess()) {
                         this@EditPostActivity.countryList = countryList!!
-
-
+                        getData()
                     }
                 }
             }
@@ -389,7 +390,6 @@ class EditPostActivity : AppCompatActivity() {
         if (screenMode == ScreenMode.AdsScreen) {
 
 
-
             if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
                     || selectedCategory == null ||
                     selectedSubCategory == null) {
@@ -430,7 +430,7 @@ class EditPostActivity : AppCompatActivity() {
 
 
             co.showLoading()
-            Api.getApi().createPost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
+            Api.getApi().updatePost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
 
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     co.hideLoading()
@@ -478,6 +478,15 @@ class EditPostActivity : AppCompatActivity() {
         val builder = MultipartBody.Builder()
         var i = -1
 
+        val type =
+                if (baddItemCB.isChecked && sellingItemCB.isChecked) {
+                    "2"
+                } else if (baddItemCB.isChecked) {
+                    "0"
+                } else {
+                    "1"
+                }
+
         builder.setType(MultipartBody.FORM)
                 .addFormDataPart("name", binding?.name?.text.toString())
                 .addFormDataPart("description", detail.text.toString().trim())
@@ -486,7 +495,21 @@ class EditPostActivity : AppCompatActivity() {
                 .addFormDataPart("user_id", co.getStringPrams())
                 .addFormDataPart("trans", co.getAppLanguage().langCode())
                 .addFormDataPart("phone", phoneNo.text.toString().trim())
+                .addFormDataPart("country_id", countryId.toString())
+                .addFormDataPart("price", baddPrice.text.toString())
+                .addFormDataPart("exchange_type", type)
+                .addFormDataPart("is_special", if (makeSpecialCB.isChecked) "1" else "0")
                 .build()
+
+
+
+        oldProductsIds.forEach {
+            builder.addFormDataPart("badl[]", it).build()
+
+        }
+        oldImageIds.forEach {
+            builder.addFormDataPart("other[]", it).build()
+        }
 
         badal_PhoneList.forEach {
             builder.addFormDataPart("baddl_phone[]", it).build()
@@ -587,6 +610,19 @@ class EditPostActivity : AppCompatActivity() {
                 body?.apply {
                     if (code!!.isSuccess()) {
 
+                        countryList.forEach {
+                            if (it.id == product?.country_id) {
+                                countryId = it.id
+                                country.text = it.country
+                                return@forEach
+                            }
+                        }
+
+
+
+
+
+
 
                         product?.user.apply {
                             username.text = this?.name ?: ""
@@ -604,6 +640,7 @@ class EditPostActivity : AppCompatActivity() {
                         list.add(pojo)
 
                         product.replacements?.forEach {
+                            oldProductsIds.add(it.id.toString())
 
                             val pojo1 = pojoProductDetail(it.id!!)
                             pojo1.imageUrl = it.img!!
@@ -616,8 +653,10 @@ class EditPostActivity : AppCompatActivity() {
 
                         val sliderList = mutableListOf<String>()
                         sliderList.add(product.mainImage.img)
+                        oldImageIds.add(product.mainImage.img)
 
                         product.subImages?.forEach {
+                            oldImageIds.add(it.id!!.toString())
                             sliderList.add(it.img ?: "")
                         }
 

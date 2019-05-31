@@ -263,7 +263,7 @@ class MakeOrderActivity : AppCompatActivity() {
                 .addFormDataPart("name", badName.text.toString())
                 .addFormDataPart("trans", co.getAppLanguage().langCode())
                 .addFormDataPart("product_id", pId.toString())
-                .addFormDataPart("phone", phoneNoBd.toString())
+         //       .addFormDataPart("phone", phoneNoBd.toString())
 
 
         if (badliniImage != null) {

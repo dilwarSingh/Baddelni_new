@@ -243,7 +243,7 @@ class CommonObjects(private val context: Context) {
 
 
                         if (jsonObject.getString("code") == "0") {
-                            co.myToast(jsonObject.getString("msg"))
+                            co.myToast(context.getString(R.string.successfuly_republished))
                         } else {
                             co.myToast(jsonObject.getString("msg"))
                         }

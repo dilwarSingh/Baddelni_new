@@ -92,7 +92,7 @@ class CreatePostActivity : AppCompatActivity() {
         postCount.text = "${GlobalSharing.postCount} ${getString(R.string.posts)}"
 
         addOther.visibility = GONE
-        cardView301.visibility = GONE
+        //cardView301.visibility = GONE
         badImage.visibility = GONE
         textView241.visibility = GONE
         backBt.setOnClickListener { finish() }
@@ -382,17 +382,18 @@ class CreatePostActivity : AppCompatActivity() {
 
         if (screenMode == ScreenMode.AdsScreen) {
 
-            if (adsImage == null) {
-                co.showToastDialog(detail = getString(R.string.selectImage), yesNo = null)
+            /* if (adsImage == null) {
+                 co.showToastDialog(detail = getString(R.string.selectImage), yesNo = null)
+                 return
+             }
+ */
+            if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
+                    || selectedCategory == null || selectedSubCategory == null || countryId == null) {
+                co.showToastDialog(getString(R.string.error), getString(R.string.enterAllFields), null)
                 return
             }
 
-            if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
-                    || selectedCategory == null ||
-                    selectedSubCategory == null) {
-                co.showToastDialog(getString(R.string.error), getString(R.string.enterAllFields), null)
-                return
-            }/*  if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
+            /*  if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
                     || selectedCategory == null ||
                     selectedSubCategory == null || countryId == null) {
                 co.showToastDialog(getString(R.string.error), getString(R.string.enterAllFields), null)
@@ -412,14 +413,26 @@ class CreatePostActivity : AppCompatActivity() {
         } else {
 
 
-            /*    if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
+            /* if (sectionSize == 0) {
+                 co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                 return
+             }*/
+
+            if (baddItemCB.isChecked) {
+                if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
                     co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
                     return
-                }*/
-            /*   if (sectionSize == 0 || badName.text.isEmpty() || badCategory.text.isEmpty()) {
-                co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
-                return
-            }*/
+                }
+                if (detailBad.text.isEmpty()) {
+                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                    return
+                }
+            } else if (sellingItemCB.isChecked) {
+                if (baddPrice.text.isEmpty()) {
+                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                    return
+                }
+            }
 
             if (!badName.text.isEmpty()) {
                 addOther.performClick()
@@ -474,6 +487,19 @@ class CreatePostActivity : AppCompatActivity() {
 
         val builder = MultipartBody.Builder()
         var i = -1
+        //  is_special,exchange_type,price
+        //  ,badl[],other[],country_id
+
+
+        val type =
+                if (baddItemCB.isChecked && sellingItemCB.isChecked) {
+                    "2"
+                } else if (baddItemCB.isChecked) {
+                    "0"
+                } else {
+                    "1"
+                }
+
 
         builder.setType(MultipartBody.FORM)
                 .addFormDataPart("name", binding?.name?.text.toString())
@@ -483,6 +509,10 @@ class CreatePostActivity : AppCompatActivity() {
                 .addFormDataPart("user_id", co.getStringPrams())
                 .addFormDataPart("trans", co.getAppLanguage().langCode())
                 .addFormDataPart("phone", phoneNo.text.toString().trim())
+                .addFormDataPart("country_id", countryId.toString())
+                .addFormDataPart("price", baddPrice.text.toString())
+                .addFormDataPart("exchange_type", type.toString())
+                .addFormDataPart("is_special", if (makeSpecialCB.isChecked) "1" else "0")
                 .build()
 
         badal_PhoneList.forEach {
@@ -493,14 +523,13 @@ class CreatePostActivity : AppCompatActivity() {
         }
 
 
-
-
         if (adsImage != null) {
             builder
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("main_image", "main_image.jpg",
                             RequestBody.create(MEDIA_TYPE_FORM, adsImage!!)).build()
         }
+
 
         //  builder.addFormDataPart("baddl_name[]", badName.text.toString())
 

@@ -49,11 +49,26 @@ public class ProductItem {
     @SerializedName("user")
     private User user;
 
+    @SerializedName("expire")
+    private int expire;
+
     @SerializedName("status")
     private int status;
 
+    public int getExpire() {
+        return expire;
+    }
+
+    public void setExpire(int expire) {
+        this.expire = expire;
+    }
+
     public MainImage getMainImage() {
         return mainImage;
+    }
+
+    public void setMainImage(MainImage mainImage) {
+        this.mainImage = mainImage;
     }
 
     public FavoriteCode getFav() {
@@ -62,10 +77,6 @@ public class ProductItem {
 
     public void setFav(FavoriteCode fav) {
         this.fav = fav;
-    }
-
-    public void setMainImage(MainImage mainImage) {
-        this.mainImage = mainImage;
     }
 
     public String getDescription() {

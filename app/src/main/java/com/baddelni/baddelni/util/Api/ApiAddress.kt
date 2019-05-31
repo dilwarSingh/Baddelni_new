@@ -75,6 +75,9 @@ interface ApiAddress {
     @POST("store_product")
     fun createPost(@Body createPost: RequestBody): Call<ResponseBody>
 
+    @POST("update_product")
+    fun updatePost(@Body updatedPost: RequestBody): Call<ResponseBody>
+
     @POST("make_order")
     fun makeOrder(@Body createPost: RequestBody): Call<ResponseBody>
 

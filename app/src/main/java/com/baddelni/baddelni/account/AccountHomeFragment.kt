@@ -233,9 +233,9 @@ class AccountHomeFragment : Fragment() {
                                     val listObj = pojoAccountHome(it!!.id)
                                     listObj.name = it.name!!
                                     listObj.description = it.description!!
-
                                     listObj.productImage = it.mainImage!!.img!!
                                     listObj.isFav = it.fav.isFavorite()
+                                    listObj.expire = it.expire
 
 
                                     if (!it.replacements.isNullOrEmpty()) {

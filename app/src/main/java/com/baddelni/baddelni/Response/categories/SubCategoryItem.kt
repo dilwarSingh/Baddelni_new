@@ -20,6 +20,9 @@ data class SubCategoryItem(
         @field:SerializedName("created_at")
         val createdAt: String? = null,
 
+        @field:SerializedName("img")
+        val img: String? = null,
+
         @field:SerializedName("id")
         val id: Int? = null
 ) : Serializable

@@ -45,6 +45,8 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
         viewHolder.binding.shareBt.visibility = View.INVISIBLE
         viewHolder.binding.saveBt.width = 0
         viewHolder.binding.imageView8.visibility = View.INVISIBLE
+
+
         /*  viewHolder.binding.saveBt.setOnClickListener {
               co.MarkProductFav(list[viewHolder.adapterPosition].pId.toString(), favCount)
           }
@@ -71,6 +73,11 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
         fun onBind(data: pojoAccountHome) {
             binding.title.text = data.name
             binding.description.text = data.description
+
+
+            if (data.expire == 1) {
+                binding.topLayer.visibility = View.VISIBLE
+            }
 
             binding.image.setGlideImageNetworkPath(data.productImage, false)
             binding.image.setOnClickListener {
@@ -132,7 +139,7 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
                 val intent = Intent(context, EditPostActivity::class.java)
                 intent.putExtra("pid", list[adapterPosition].pId)
                 context.startActivity(intent)
-                
+
                 mypopupWindow.dismiss()
             }
 

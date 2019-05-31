@@ -113,8 +113,9 @@ class SubCategoryActivity : AppCompatActivity() {
             include4.showAllText.text = "${list.size} ${getString(R.string.new_add)}"
 
             val mList: MutableList<SubCategoryItem> = list
-            mList.add(0, SubCategoryItem(categoryId, "", getString(R.string.all), "", "", -1))
-            catRecycler.adapter = SubCatRecyclerAdapter(this, list, productListAdapter)
+            mList.add(0, SubCategoryItem(categoryId, "", getString(R.string.all), "", "",logo,-1))
+            catRecycler.adapter = SubCatRecyclerAdapter(this, mList
+                    , productListAdapter)
 
             getData()
 

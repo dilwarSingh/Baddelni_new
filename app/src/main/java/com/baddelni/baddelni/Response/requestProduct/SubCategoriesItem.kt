@@ -13,6 +13,9 @@ data class SubCategoriesItem(
 	@field:SerializedName("sub_category")
 	val subCategory: String? = null,
 
+	@field:SerializedName("img")
+	val img: String? = null,
+
 	@field:SerializedName("sub_category_ar")
 	val subCategoryAr: String? = null,
 

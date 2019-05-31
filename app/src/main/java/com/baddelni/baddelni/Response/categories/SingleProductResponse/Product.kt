@@ -40,6 +40,9 @@ data class Product(
         @field:SerializedName("category")
         val category: Category? = null,
 
+ @field:SerializedName("country_id")
+        val country_id: Int? = null,
+
         @field:SerializedName("user")
         val user: User? = null,
 
