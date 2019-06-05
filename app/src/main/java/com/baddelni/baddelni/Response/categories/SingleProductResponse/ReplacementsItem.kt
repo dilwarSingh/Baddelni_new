@@ -29,5 +29,7 @@ data class ReplacementsItem(
         val id: Int? = null,
 
         @field:SerializedName("description")
-        val description: String? = null
+        val description: String? = null,
+
+        var selected: Boolean = true
 )

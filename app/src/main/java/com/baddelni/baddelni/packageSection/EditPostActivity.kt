@@ -15,6 +15,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.afollestad.materialdialogs.MaterialDialog
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.Countries.Countries
 import com.baddelni.baddelni.Response.Countries.CountriesItem
@@ -55,6 +56,7 @@ class EditPostActivity : AppCompatActivity() {
 
     private val IMAGE_DIRECTORY = "/Baddelni"
     private val GALLERY = 213
+    private val SELECTION_LIST = 169
     private val CAMERA = 142
     private var adsImage: File? = null
     private var badliniImage: File? = null
@@ -88,8 +90,7 @@ class EditPostActivity : AppCompatActivity() {
 
     var sectionSize = 0
     var oldImageIds: MutableList<String> = listOf<String>().toMutableList()
-    var oldProductsIds: MutableList<String> = listOf<String>().toMutableList()
-
+    var oldProductsIds: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +134,7 @@ class EditPostActivity : AppCompatActivity() {
         }
         subCategory.setOnClickListener {
 
-            if (selectedCategory == null) {
+            if (selectedCategory == null || subCategoryList == null) {
                 co.showToastDialog(detail = getString(R.string.selectCategoryFirst), yesNo = null)
                 return@setOnClickListener
             }
@@ -149,6 +150,7 @@ class EditPostActivity : AppCompatActivity() {
                     .build()
                     .show()
         }
+
         badCategory.setOnClickListener {
             MaterialDialog
                     .Builder(this)
@@ -179,13 +181,6 @@ class EditPostActivity : AppCompatActivity() {
 
         binding!!.baddItemCB.isChecked = true
 
-        binding!!.baddItemCB.setOnClickListener {
-            binding!!.sellingItemCB.isChecked = !binding!!.baddItemCB.isChecked
-        }
-        binding!!.sellingItemCB.setOnClickListener {
-            binding!!.baddItemCB.isChecked = !binding!!.baddItemCB.isChecked
-        }
-
         addOther.setOnClickListener {
 
             badal_namesList.add(binding!!.badName.text.toString().trim())
@@ -213,13 +208,14 @@ class EditPostActivity : AppCompatActivity() {
 
         createBt.text = getString(R.string.next)
         createBt.setOnClickListener { saveDataToServer() }
-        /*    productImage.setOnClickListener { showPictureDialog(ImageSet.PRODUCT_IMAGE) }
-            image1.setOnClickListener { showPictureDialog(ImageSet.IMG1) }
-            image2.setOnClickListener { showPictureDialog(ImageSet.IMG2) }
-            image3.setOnClickListener { showPictureDialog(ImageSet.IMG3) }
-            image4.setOnClickListener { showPictureDialog(ImageSet.IMG4) }
-            badImage.setOnClickListener { showPictureDialog(ImageSet.BADLINI_IMAGE) }
-    */
+
+        productImage.setOnClickListener { showPictureDialog(ImageSet.PRODUCT_IMAGE) }
+        image1.setOnClickListener { showPictureDialog(ImageSet.IMG1) }
+        image2.setOnClickListener { showPictureDialog(ImageSet.IMG2) }
+        image3.setOnClickListener { showPictureDialog(ImageSet.IMG3) }
+        image4.setOnClickListener { showPictureDialog(ImageSet.IMG4) }
+        badImage.setOnClickListener { showPictureDialog(ImageSet.BADLINI_IMAGE) }
+
     }
 
 
@@ -301,6 +297,8 @@ class EditPostActivity : AppCompatActivity() {
             val thumbnail = data!!.extras!!.get("data") as Bitmap
             //        profileImage!!.setImageBitmap(thumbnail)
             saveImage(thumbnail, true)
+        } else if (requestCode == SELECTION_LIST) {
+            oldProductsIds = data?.getStringExtra("selectedList") ?: ""
         }
     }
 
@@ -353,18 +351,22 @@ class EditPostActivity : AppCompatActivity() {
             ImageSet.IMG1 -> {
                 image1.setGlideImage(myBitmap, false)
                 subImageList[0] = file
+                uploadSubImage(file, oldImageIds[0])
             }
             ImageSet.IMG2 -> {
                 image2.setGlideImage(myBitmap, false)
                 subImageList[1] = file
+                uploadSubImage(file, oldImageIds[1])
             }
             ImageSet.IMG3 -> {
                 image3.setGlideImage(myBitmap, false)
                 subImageList[2] = file
+                uploadSubImage(file, oldImageIds[2])
             }
             ImageSet.IMG4 -> {
                 image4.setGlideImage(myBitmap, false)
                 subImageList[3] = file
+                uploadSubImage(file, oldImageIds[3])
             }
             ImageSet.BADLINI_IMAGE -> {
                 badImage.setGlideImage(myBitmap)
@@ -423,6 +425,19 @@ class EditPostActivity : AppCompatActivity() {
                 co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
                 return
             }*/
+
+            if (baddItemCB.isChecked) {
+                if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
+                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                    return
+                }
+            }
+            if (sellingItemCB.isChecked) {
+                if (baddPrice.text.toString().isEmpty()) {
+                    co.showToastDialog(detail = getString(R.string.enterPrice), yesNo = null)
+                    return
+                }
+            }
 
             if (!badName.text.isEmpty()) {
                 addOther.performClick()
@@ -488,6 +503,7 @@ class EditPostActivity : AppCompatActivity() {
                 }
 
         builder.setType(MultipartBody.FORM)
+                .addFormDataPart("product_id", pId.toString())
                 .addFormDataPart("name", binding?.name?.text.toString())
                 .addFormDataPart("description", detail.text.toString().trim())
                 .addFormDataPart("category_id", selectedCategory.toString())
@@ -498,18 +514,14 @@ class EditPostActivity : AppCompatActivity() {
                 .addFormDataPart("country_id", countryId.toString())
                 .addFormDataPart("price", baddPrice.text.toString())
                 .addFormDataPart("exchange_type", type)
+                .addFormDataPart("badl[]", oldProductsIds)
                 .addFormDataPart("is_special", if (makeSpecialCB.isChecked) "1" else "0")
                 .build()
 
 
-
-        oldProductsIds.forEach {
-            builder.addFormDataPart("badl[]", it).build()
-
-        }
-        oldImageIds.forEach {
-            builder.addFormDataPart("other[]", it).build()
-        }
+        /*     oldImageIds.forEach {
+                 builder.addFormDataPart("other[]", it).build()
+             }*/
 
         badal_PhoneList.forEach {
             builder.addFormDataPart("baddl_phone[]", it).build()
@@ -517,9 +529,6 @@ class EditPostActivity : AppCompatActivity() {
         badal_DescriptionList.forEach {
             builder.addFormDataPart("baddl_description[]", it).build()
         }
-
-
-
 
         if (adsImage != null) {
             builder
@@ -552,14 +561,15 @@ class EditPostActivity : AppCompatActivity() {
         builder.build()
 
         builder.setType(MultipartBody.FORM)
-        subImageList.forEach {
-            if (it != null) {
-                i++
-                builder
-                        .addFormDataPart("sub_images[]", "sub_images[$i].jpg",
-                                RequestBody.create(MEDIA_TYPE_FORM, adsImage!!))
-            }
-        }
+
+        /*   subImageList.forEach {
+               if (it != null) {
+                   i++
+                   builder
+                           .addFormDataPart("sub_images[]", "sub_images[$i].jpg",
+                                   RequestBody.create(MEDIA_TYPE_FORM, adsImage!!))
+               }
+           }*/
         builder.build()
 
         return builder.build()
@@ -639,8 +649,12 @@ class EditPostActivity : AppCompatActivity() {
 
                         list.add(pojo)
 
+
+                        App.replacementsItem = product.replacements
+
                         product.replacements?.forEach {
-                            oldProductsIds.add(it.id.toString())
+
+                            oldProductsIds += "${it.id.toString()},"
 
                             val pojo1 = pojoProductDetail(it.id!!)
                             pojo1.imageUrl = it.img!!
@@ -650,15 +664,49 @@ class EditPostActivity : AppCompatActivity() {
                             list.add(pojo1)
 
                         }
+                        oldProductsIds = oldProductsIds.substring(0, oldProductsIds.length - 1)
 
                         val sliderList = mutableListOf<String>()
                         sliderList.add(product.mainImage.img)
-                        oldImageIds.add(product.mainImage.img)
 
-                        product.subImages?.forEach {
+                        baddPrice.setText(product.price ?: "")
+
+                        for (i in 0..4) {
+                            oldImageIds.add(i, "")
+                        }
+
+                        product.subImages?.forEachIndexed { index, it ->
                             oldImageIds.add(it.id!!.toString())
                             sliderList.add(it.img ?: "")
+
+                            if (index == 0) {
+                                image1.setGlideImageNetworkPath(it.img ?: "")
+                            }
+                            if (index == 1) {
+                                image2.setGlideImageNetworkPath(it.img ?: "")
+                            }
+                            if (index == 2) {
+                                image3.setGlideImageNetworkPath(it.img ?: "")
+                            }
+                            if (index == 3) {
+                                image4.setGlideImageNetworkPath(it.img ?: "")
+                            }
                         }
+
+                        itemsList.visibility = VISIBLE
+                        if (product.replacements?.isEmpty() ?: true) {
+                            itemsList.visibility = GONE
+                        }
+
+                        itemsList.setOnClickListener {
+                            val replacementProducts = product.replacements
+
+
+                            val intent = Intent(this@EditPostActivity, ItemSelectionActivity::class.java)
+                            startActivityForResult(intent, SELECTION_LIST);
+                        }
+
+
 
                         productImage.setGlideImageNetworkPath(pojo.imageUrl)
                         name.setText(pojo.name)
@@ -688,5 +736,36 @@ class EditPostActivity : AppCompatActivity() {
 
 
     }
+
+    fun uploadSubImage(sumImage: File, sumImageId: String) {
+        co.showLoading("Image Loading...")
+
+        Api.getApi().subImageUpload(createSubImagesBody(sumImage, sumImageId)).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                co.hideLoading()
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                co.hideLoading()
+
+            }
+        })
+
+    }
+
+    private fun createSubImagesBody(sumImage: File, sumImageId: String): MultipartBody {
+
+        val builder = MultipartBody.Builder()
+        builder.setType(MultipartBody.FORM)
+                .addFormDataPart("product_id", pId.toString())
+                .addFormDataPart("image_id", sumImageId)
+                .addFormDataPart("trans", co.getAppLanguage().langCode())
+
+        builder.setType(MultipartBody.FORM).addFormDataPart("sub_images", "sub_images.png",
+                RequestBody.create(MEDIA_TYPE_FORM, sumImage)).build()
+
+        return builder.build()
+    }
+
 
 }

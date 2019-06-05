@@ -2,17 +2,19 @@ package com.baddelni.baddelni
 
 import android.app.Application
 import android.content.Context
+import com.baddelni.baddelni.Response.categories.SingleProductResponse.ReplacementsItem
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.AppLanguage
+import com.crashlytics.android.Crashlytics
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
-import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
 
 
-
-
 class App : Application() {
+    companion object {
+        var replacementsItem: List<ReplacementsItem>? = null
+    }
 
     override fun onCreate() {
         super.onCreate()

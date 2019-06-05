@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
 
                     <android.support.v7.widget.CardView
@@ -381,7 +381,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"
-                    tools:visibility="gone">
+                    tools:visibility="visible">
 
                     <CheckBox
                         android:id="@+id/baddItemCB"
@@ -543,7 +543,7 @@
                             android:background="@color/transparent"
                             android:ems="10"
                             android:hint="@string/price"
-                            android:inputType="textPersonName"
+                            android:inputType="numberDecimal"
                             android:singleLine="true"
                             android:textColor="@color/greyText" />
 

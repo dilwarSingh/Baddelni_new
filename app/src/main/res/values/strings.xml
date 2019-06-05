@@ -5,10 +5,8 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
 
-
     <string name="facebook_app_id" translatable="false">290214045031493</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb290214045031493</string>
-
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -199,6 +197,8 @@
     <string name="sureLogin">Are you sure want to Login?</string>
     <string name="selling_items">Selling Items</string>
     <string name="price">Price</string>
+
     <string name="successfuly_republished">Successfully Republished</string>
+    <string name="enterPrice">Enter Price</string>
 
 </resources>

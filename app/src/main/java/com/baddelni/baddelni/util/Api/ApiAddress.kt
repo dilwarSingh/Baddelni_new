@@ -72,6 +72,9 @@ interface ApiAddress {
     @POST("update_my_account")
     fun updateAccount(@Body profileData: RequestBody): Call<ResponseBody>
 
+    @POST("subupload_image")
+    fun subImageUpload(@Body profileData: RequestBody): Call<ResponseBody>
+
     @POST("store_product")
     fun createPost(@Body createPost: RequestBody): Call<ResponseBody>
 
@@ -149,6 +152,7 @@ interface ApiAddress {
     @POST("delete_product")
     fun deleteProduct(@Field("product_id") product_id: String,
                       @Field("trans") trans: String): Call<ResponseBody>
+
 
     @FormUrlEncoded
     @POST("republish_product")

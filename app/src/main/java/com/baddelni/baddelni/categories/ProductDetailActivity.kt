@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import com.baddelni.baddelni.R
+import com.baddelni.baddelni.Response.Countries.Countries
+import com.baddelni.baddelni.Response.Countries.CountriesItem
 import com.baddelni.baddelni.Response.categories.SingleProductResponse.SingleProductResponse
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.packageSection.MakeOrderActivity
@@ -70,11 +72,35 @@ class ProductDetailActivity : AppCompatActivity() {
             }
         }
 
-
-        getData()
+        getCountyData()
     }
 
-    private fun getData() {
+    private fun getCountyData() {
+
+
+        Api.getApi().getCountries(co.getAppLanguage().langCode()).enqueue(object : Callback<Countries> {
+
+            override fun onResponse(call: Call<Countries>, response: Response<Countries>) {
+                val body = response.body()
+
+                body?.apply {
+                    if (code!!.isSuccess()) {
+                        getData(countryList!!)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Countries>, t: Throwable) {
+                co.myToast(t.message)
+                Log.e("ResponseFailure: ", t.message)
+                t.printStackTrace()
+            }
+
+        })
+
+    }
+
+    private fun getData(countryList: List<CountriesItem>) {
         co.showLoading()
 
         Api.getApi().singleProduct(pId!!, co.getAppLanguage().langCode()).enqueue(object : Callback<SingleProductResponse> {
@@ -84,6 +110,28 @@ class ProductDetailActivity : AppCompatActivity() {
                 co.hideLoading()
                 body?.apply {
                     if (code!!.isSuccess()) {
+
+                        var currency = "KWD"
+
+                        countryList.forEach {
+                            if (it.id == product?.country_id) {
+                                currency = if (it.id == 2) {
+                                    "EGP"
+                                } else if (it.id == 3) {
+                                    "SR"
+                                } else {
+                                    "KWD"
+                                }
+                                return@forEach
+                            }
+                        }
+
+                        if (product?.price?.toInt() ?: 0 > 0) {
+                            priceTag.text =
+                                    "${getString(R.string.price)} ${product?.price?.toInt()
+                                            ?: 0} $currency"
+                        }
+
 
 
                         product?.user.apply {

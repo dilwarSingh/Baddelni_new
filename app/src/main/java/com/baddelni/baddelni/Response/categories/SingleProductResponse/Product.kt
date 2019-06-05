@@ -1,5 +1,6 @@
 package com.baddelni.baddelni.Response.categories.SingleProductResponse
 
+import com.baddelni.baddelni.Response.Countries.CountriesItem
 import com.google.gson.annotations.SerializedName
 
 data class Product(
@@ -12,6 +13,9 @@ data class Product(
 
         @field:SerializedName("created_at")
         val createdAt: String? = null,
+
+        @field:SerializedName("price")
+        val price: String? = null,
 
         @field:SerializedName("sub_categories")
         val subCategories: List<SubCategoriesItem?>? = null,
@@ -31,6 +35,9 @@ data class Product(
         @field:SerializedName("name")
         val name: String? = null,
 
+        @field:SerializedName("country")
+        val country: CountriesItem? = null,
+
         @field:SerializedName("id")
         val id: Int? = null,
 
@@ -40,7 +47,7 @@ data class Product(
         @field:SerializedName("category")
         val category: Category? = null,
 
- @field:SerializedName("country_id")
+        @field:SerializedName("country_id")
         val country_id: Int? = null,
 
         @field:SerializedName("user")

@@ -172,12 +172,12 @@ class CreatePostActivity : AppCompatActivity() {
 
         binding!!.baddItemCB.isChecked = true
 
-        binding!!.baddItemCB.setOnClickListener {
+        /*binding!!.baddItemCB.setOnClickListener {
             binding!!.sellingItemCB.isChecked = !binding!!.baddItemCB.isChecked
         }
         binding!!.sellingItemCB.setOnClickListener {
             binding!!.baddItemCB.isChecked = !binding!!.baddItemCB.isChecked
-        }
+        }*/
 
         addOther.setOnClickListener {
 
@@ -382,16 +382,17 @@ class CreatePostActivity : AppCompatActivity() {
 
         if (screenMode == ScreenMode.AdsScreen) {
 
-            /* if (adsImage == null) {
+             if (adsImage == null) {
                  co.showToastDialog(detail = getString(R.string.selectImage), yesNo = null)
                  return
              }
- */
+
             if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
                     || selectedCategory == null || selectedSubCategory == null || countryId == null) {
                 co.showToastDialog(getString(R.string.error), getString(R.string.enterAllFields), null)
                 return
             }
+
 
             /*  if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
                     || selectedCategory == null ||
