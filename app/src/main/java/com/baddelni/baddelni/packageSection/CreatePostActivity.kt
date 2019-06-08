@@ -382,10 +382,10 @@ class CreatePostActivity : AppCompatActivity() {
 
         if (screenMode == ScreenMode.AdsScreen) {
 
-             if (adsImage == null) {
-                 co.showToastDialog(detail = getString(R.string.selectImage), yesNo = null)
-                 return
-             }
+            if (adsImage == null) {
+                co.showToastDialog(detail = getString(R.string.selectImage), yesNo = null)
+                return
+            }
 
             if (binding?.name?.text.toString().isEmpty() || detail.text.toString().trim().isEmpty() || phoneNo.text.toString().trim().isEmpty()
                     || selectedCategory == null || selectedSubCategory == null || countryId == null) {
@@ -419,67 +419,75 @@ class CreatePostActivity : AppCompatActivity() {
                  return
              }*/
 
-            if (baddItemCB.isChecked) {
-                if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
-                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
-                    return
+
+            if (baddItemCB.isChecked || sellingItemCB.isChecked) {
+
+                if (baddItemCB.isChecked) {
+                    if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
+                        co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                        return
+                    }
+                    if (detailBad.text.isEmpty()) {
+                        co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                        return
+                    }
+                } else if (sellingItemCB.isChecked) {
+                    if (baddPrice.text.isEmpty()) {
+                        co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                        return
+                    }
                 }
-                if (detailBad.text.isEmpty()) {
-                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
-                    return
+
+                if (!badName.text.isEmpty()) {
+                    addOther.performClick()
                 }
-            } else if (sellingItemCB.isChecked) {
-                if (baddPrice.text.isEmpty()) {
-                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
-                    return
-                }
-            }
-
-            if (!badName.text.isEmpty()) {
-                addOther.performClick()
-            }
 
 
-            co.showLoading()
-            Api.getApi().createPost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
+                co.showLoading()
+                Api.getApi().createPost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
 
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    co.hideLoading()
-                    val body = response.body()
-                    if (body != null) {
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        co.hideLoading()
+                        val body = response.body()
+                        if (body != null) {
 
-                        val jString = body.string()
+                            val jString = body.string()
 
-                        val jsonObject = JSONObject(jString)
-                        if (jsonObject.getString("code") == "0") {
-                            co.putStringPrams(AppConstants.AVALIABLE_POSTS, co.getStringPrams(AppConstants.AVALIABLE_POSTS).toInt().minus(1).toString())
-                            co.showToastDialog(detail = getString(R.string.postAddedSuccessful), yesNo = object : YesNoInterface {
-                                override fun onClickYes() {
-                                    onBackPressed()
-                                }
+                            val jsonObject = JSONObject(jString)
+                            if (jsonObject.getString("code") == "0") {
+                                co.putStringPrams(AppConstants.AVALIABLE_POSTS, co.getStringPrams(AppConstants.AVALIABLE_POSTS).toInt().minus(1).toString())
+                                co.showToastDialog(detail = getString(R.string.postAddedSuccessful), yesNo = object : YesNoInterface {
+                                    override fun onClickYes() {
+                                        onBackPressed()
+                                    }
 
-                            })
+                                })
+
+                            } else {
+                                co.showToastDialog(detail = jsonObject.getString("msg"), yesNo = null)
+                            }
+
 
                         } else {
-                            co.showToastDialog(detail = jsonObject.getString("msg"), yesNo = null)
+                            co.showToastDialog(detail = getString(R.string.ErrorPleaseTryAgainLater), yesNo = null)
                         }
 
-
-                    } else {
-                        co.showToastDialog(detail = getString(R.string.ErrorPleaseTryAgainLater), yesNo = null)
                     }
 
-                }
 
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        co.myToast(t.message)
+                        Log.e("ResponseFailure: ", t.message)
+                        t.printStackTrace()
+                        co.hideLoading()
+                    }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    co.myToast(t.message)
-                    Log.e("ResponseFailure: ", t.message)
-                    t.printStackTrace()
-                    co.hideLoading()
-                }
+                })
 
-            })
+            } else {
+                co.showToastDialog(detail = "Please select baddelni Item or Selling Item", yesNo = null)
+                return
+            }
         }
 
     }

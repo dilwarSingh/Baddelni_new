@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chatBt.visibility = GONE
 
-        checkAppVersion(2.7F)
+        checkAppVersion(2.8F)
 
         if (co.getStringPrams() == AppConstants.GuestUserId) {
             //     quickView.visibility = GONE
@@ -209,7 +209,7 @@ class HomeFragment : Fragment() {
                             DialogInterface.BUTTON_POSITIVE -> {
                                 dialog.dismiss()
 
-                                val appPackageName = context!!.getPackageName(); // package name of the app
+                                val appPackageName = context!!.packageName; // package name of the app
                                 try {
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                                 } catch (anfe: ActivityNotFoundException) {

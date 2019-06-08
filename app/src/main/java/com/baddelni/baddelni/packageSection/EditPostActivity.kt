@@ -218,7 +218,6 @@ class EditPostActivity : AppCompatActivity() {
 
     }
 
-
     private fun showPictureDialog(setImageIn: ImageSet) {
         selectedImage = setImageIn
         val pictureDialog = AlertDialog.Builder(this)
@@ -426,64 +425,70 @@ class EditPostActivity : AppCompatActivity() {
                 return
             }*/
 
-            if (baddItemCB.isChecked) {
-                if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
-                    co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
-                    return
+            if (baddItemCB.isChecked || sellingItemCB.isChecked) {
+
+
+                if (baddItemCB.isChecked) {
+                    if (badName.text.isEmpty() || badCategory.text.isEmpty()) {
+                        co.showToastDialog(detail = getString(R.string.enterAllFields), yesNo = null)
+                        return
+                    }
                 }
-            }
-            if (sellingItemCB.isChecked) {
-                if (baddPrice.text.toString().isEmpty()) {
-                    co.showToastDialog(detail = getString(R.string.enterPrice), yesNo = null)
-                    return
+                if (sellingItemCB.isChecked) {
+                    if (baddPrice.text.toString().isEmpty()) {
+                        co.showToastDialog(detail = getString(R.string.enterPrice), yesNo = null)
+                        return
+                    }
                 }
-            }
+                if (!badName.text.isEmpty()) {
+                    addOther.performClick()
+                }
 
-            if (!badName.text.isEmpty()) {
-                addOther.performClick()
-            }
+                co.showLoading()
+                Api.getApi().updatePost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
 
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        co.hideLoading()
+                        val body = response.body()
+                        if (body != null) {
 
-            co.showLoading()
-            Api.getApi().updatePost(createProfileBody()).enqueue(object : Callback<ResponseBody> {
+                            val jString = body.string()
 
-                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                    co.hideLoading()
-                    val body = response.body()
-                    if (body != null) {
+                            val jsonObject = JSONObject(jString)
+                            if (jsonObject.getString("code") == "0") {
+                                co.putStringPrams(AppConstants.AVALIABLE_POSTS, co.getStringPrams(AppConstants.AVALIABLE_POSTS).toInt().minus(1).toString())
+                                co.showToastDialog(detail = getString(R.string.postAddedSuccessful), yesNo = object : YesNoInterface {
+                                    override fun onClickYes() {
+                                        onBackPressed()
+                                    }
 
-                        val jString = body.string()
+                                })
 
-                        val jsonObject = JSONObject(jString)
-                        if (jsonObject.getString("code") == "0") {
-                            co.putStringPrams(AppConstants.AVALIABLE_POSTS, co.getStringPrams(AppConstants.AVALIABLE_POSTS).toInt().minus(1).toString())
-                            co.showToastDialog(detail = getString(R.string.postAddedSuccessful), yesNo = object : YesNoInterface {
-                                override fun onClickYes() {
-                                    onBackPressed()
-                                }
+                            } else {
+                                co.showToastDialog(detail = jsonObject.getString("msg"), yesNo = null)
+                            }
 
-                            })
 
                         } else {
-                            co.showToastDialog(detail = jsonObject.getString("msg"), yesNo = null)
+                            co.showToastDialog(detail = getString(R.string.ErrorPleaseTryAgainLater), yesNo = null)
                         }
 
-
-                    } else {
-                        co.showToastDialog(detail = getString(R.string.ErrorPleaseTryAgainLater), yesNo = null)
                     }
 
-                }
 
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        co.myToast(t.message)
+                        Log.e("ResponseFailure: ", t.message)
+                        t.printStackTrace()
+                        co.hideLoading()
+                    }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    co.myToast(t.message)
-                    Log.e("ResponseFailure: ", t.message)
-                    t.printStackTrace()
-                    co.hideLoading()
-                }
+                })
 
-            })
+            } else {
+                co.showToastDialog(detail = "Please select baddelni Item or Selling Item", yesNo = null)
+                return
+            }
         }
 
     }
@@ -629,15 +634,24 @@ class EditPostActivity : AppCompatActivity() {
                         }
 
 
-
-
-
-
-
                         product?.user.apply {
                             username.text = this?.name ?: ""
                             this?.phone
                         }
+
+                        if (product?.is_special == 1) {
+                            makeSpecialCB.isChecked = true
+                        }
+
+                        if (product?.exchange_type == 1) {
+                            sellingItemCB.isChecked = true
+                        } else if (product?.exchange_type == 2) {
+                            baddItemCB.isChecked = true
+                            sellingItemCB.isChecked = true
+                        } else {
+                            baddItemCB.isChecked = true
+                        }
+
 
                         val list = mutableListOf<pojoProductDetail>()
 

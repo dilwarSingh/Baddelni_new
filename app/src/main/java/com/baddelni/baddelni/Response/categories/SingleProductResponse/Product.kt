@@ -41,6 +41,12 @@ data class Product(
         @field:SerializedName("id")
         val id: Int? = null,
 
+        @field:SerializedName("is_special")
+        val is_special: Int = 0,
+
+        @field:SerializedName("exchange_type")
+        val exchange_type: Int = 0,
+
         @field:SerializedName("replacements")
         val replacements: List<ReplacementsItem>? = null,
 

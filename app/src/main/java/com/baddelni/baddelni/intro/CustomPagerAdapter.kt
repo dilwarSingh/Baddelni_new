@@ -28,7 +28,7 @@ class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int
             Glide.with(imageView)
                     .setDefaultRequestOptions(
                             RequestOptions()
-                                    .centerCrop()
+                                    .centerInside()
                     )
                     .load(networkImage?.img)
                     .into(imageView)
