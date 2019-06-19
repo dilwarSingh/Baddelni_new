@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.categories.SubCategoryItem
+import com.baddelni.baddelni.Response.categories.categoriesNew.SubCategoryItem
 import com.bumptech.glide.Glide
 
 class SubCatRecyclerAdapter(val context: Context, val list: List<SubCategoryItem>, val productListAdapter: AdapterSubCategory) : RecyclerView.Adapter<SubCatRecyclerAdapter.ViewHolder>() {

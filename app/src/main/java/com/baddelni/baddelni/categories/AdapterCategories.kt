@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.categories.CategoriesItem
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.util.CommonObjects
 

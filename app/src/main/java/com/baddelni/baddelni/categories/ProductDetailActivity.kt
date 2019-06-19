@@ -17,11 +17,17 @@ import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import okhttp3.ResponseBody
+import org.joda.time.DateTime
+import org.joda.time.Days
+import org.joda.time.Hours
+import org.joda.time.Minutes
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ss.com.bannerslider.banners.Banner
 import ss.com.bannerslider.banners.RemoteBanner
+import java.util.*
 
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -95,9 +101,7 @@ class ProductDetailActivity : AppCompatActivity() {
                 Log.e("ResponseFailure: ", t.message)
                 t.printStackTrace()
             }
-
         })
-
     }
 
     private fun getData(countryList: List<CountriesItem>) {
@@ -110,6 +114,8 @@ class ProductDetailActivity : AppCompatActivity() {
                 co.hideLoading()
                 body?.apply {
                     if (code!!.isSuccess()) {
+
+                        hitProductViewApi(product?.id)
 
                         var currency = "KWD"
 
@@ -183,7 +189,9 @@ class ProductDetailActivity : AppCompatActivity() {
 
                         makeSlider(sliderList)
 
-
+                     /*   val time = getTimeDetail(this@ProductDetailActivity, product.timestamp)
+                        textView28.text = time
+*/
                     }
 
                 }
@@ -199,6 +207,47 @@ class ProductDetailActivity : AppCompatActivity() {
             }
 
         })
+
+
+    }
+
+    private fun getTimeDetail(context: Context, createdAt: Long?): String {
+        //published_at": "2019-08-09 03:55:35
+
+        /*   val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+           val dateStramp = formatter.parse(createdAt).time
+   */
+        val current = Date().time
+
+        val dt1 = DateTime(createdAt)
+        val dt2 = DateTime(current)
+
+        //val month = Months.monthsBetween(dt1, dt2).months
+        val days = Days.daysBetween(dt1, dt2).days
+        val hours = Hours.hoursBetween(dt1, dt2).hours % 24
+        val mints = Minutes.minutesBetween(dt1, dt2).minutes % 60
+
+        val time = when {
+            days > 0 -> "$days ${context.getString(R.string.days)}"
+            hours > 0 -> "$hours ${context.getString(R.string.hours)}"
+            else -> "$mints ${context.getString(R.string.minutes)}"
+        }
+
+        return time.toLowerCase()
+    }
+
+    private fun hitProductViewApi(id: Int?) {
+
+        Api.getApi().markProductView(co.getStringPrams(), id ?: 0).enqueue(
+                object : Callback<ResponseBody> {
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    }
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    }
+
+                }
+        )
 
 
     }

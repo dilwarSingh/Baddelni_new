@@ -1,4 +1,4 @@
-package com.baddelni.baddelni.Response.categories
+package com.baddelni.baddelni.Response.categories.categoriesNew
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

@@ -14,21 +14,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.MyAccount.MyAccount
 import com.baddelni.baddelni.Response.home.AdsItem
 import com.baddelni.baddelni.Response.home.HomeResponse
 import com.baddelni.baddelni.Response.home.SlidesItem
+import com.baddelni.baddelni.Response.sellingItems.Data
 import com.baddelni.baddelni.account.setGlideUserImage
 import com.baddelni.baddelni.categories.SubCategoryActivity
 import com.baddelni.baddelni.categories.pojoProductDetail
-import com.baddelni.baddelni.chat.ChatActivity
+import com.baddelni.baddelni.chat.ChatListActivity
 import com.baddelni.baddelni.packageSection.CreatePostActivity
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
 import com.baddelni.baddelni.util.GlobalSharing
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_home_top.view.*
 import okhttp3.ResponseBody
@@ -54,7 +58,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         chatBt.visibility = GONE
 
-        checkAppVersion(2.8F)
+    //    checkAppVersion(2.7F)
 
         if (co.getStringPrams() == AppConstants.GuestUserId) {
             //     quickView.visibility = GONE
@@ -65,7 +69,6 @@ class HomeFragment : Fragment() {
             co.putStringPrams(AppConstants.PERSON_NAME, getString(R.string.guestUser))
         } else {
             accountData()
-
             profileImg.setOnClickListener {
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -77,8 +80,6 @@ class HomeFragment : Fragment() {
         username.text = co.getStringPrams(AppConstants.PERSON_NAME)
 
 
-
-
         fabCreatePost.setOnClickListener {
             if (co.getStringPrams() == AppConstants.GuestUserId) {
                 co.showLoginDialog(getString(R.string.dont_have_permission))
@@ -87,7 +88,7 @@ class HomeFragment : Fragment() {
         }
 
         chatBt.setOnClickListener {
-            val intent = Intent(activity, ChatActivity::class.java)
+            val intent = Intent(activity, ChatListActivity::class.java)
             startActivity(intent)
         }
 
@@ -105,11 +106,19 @@ class HomeFragment : Fragment() {
         }
         categoriesBt.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
+            App.fromSelling = false
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra("tabLocation", 2)
             startActivity(intent)
         }
 
+        sellingBt.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java)
+            App.fromSelling = true
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra("tabLocation", 2)
+            startActivity(intent)
+        }
 
 
         quickInclude.apply {
@@ -125,34 +134,39 @@ class HomeFragment : Fragment() {
         }
 
         nearInclude.showAllText.setOnClickListener {
-            val pList = emptyList<pojoProductDetail>().toMutableList()
-            (topCity.adapter as TopCityAdapter).list.forEach { product ->
-                val pojo = pojoProductDetail(product.id!!)
 
-                pojo.name = product.name!!
-                pojo.description = product.description!!
-                pojo.imageUrl = product.mainImage?.img!!
+            hitSeeAllApi("topcountry")
 
-                pojo.userImage = product.user?.img!!
-                pojo.userEmail = product.name
-                pojo.userName = product.user.name!!
-                pojo.userId = product.user.id.toString()
-                pojo.isFav = product.fav.isFavorite()
+            /*   val pList = emptyList<pojoProductDetail>().toMutableList()
+               (topCity.adapter as TopCityAdapter).list.forEach { product ->
+                   val pojo = pojoProductDetail(product.id!!)
 
-                pList.add(pojo)
-            }
+                   pojo.name = product.name!!
+                   pojo.description = product.description!!
+                   pojo.imageUrl = product.mainImage?.img!!
 
-            val intent = Intent(context, SubCategoryActivity::class.java)
-            intent.putExtra("title", "Top In Your City")
-            intent.putExtra("list", pList.toTypedArray())
-            intent.putExtra("isShowList", true)
-            startActivity(intent)
+                   pojo.userImage = product.user?.img!!
+                   pojo.userEmail = product.name
+                   pojo.userName = product.user.name!!
+                   pojo.userId = product.user.id.toString()
+                   pojo.isFav = product.fav.isFavorite()
+
+                   pList.add(pojo)
+               }
+
+               val intent = Intent(context, SubCategoryActivity::class.java)
+               intent.putExtra("title", "Top In Your City")
+               intent.putExtra("list", pList.toTypedArray())
+               intent.putExtra("isShowList", true)
+               startActivity(intent)*/
         }
         latestInclude.title.run {
             text = context.getString(R.string.latestAds)
             setTypeface(typeface, BOLD)
         }
-        latestInclude.showAllText.visibility = View.INVISIBLE
+        latestInclude.showAllText.setOnClickListener {
+            hitSeeAllApi("toplatest")
+        }
 
         intrestInclude.title.run {
             text = context.getString(R.string.topInYourIntrest)
@@ -160,30 +174,32 @@ class HomeFragment : Fragment() {
 
         }
         intrestInclude.showAllText.setOnClickListener {
+            hitSeeAllApi("topintersted")
 
-            val pList = emptyList<pojoProductDetail>().toMutableList()
-            (yourIntrest.adapter as TopIntrestAdapter).list.forEach { product ->
-                val pojo = pojoProductDetail(product.id!!)
+            /*   val pList = emptyList<pojoProductDetail>().toMutableList()
+              (yourIntrest.adapter as TopIntrestAdapter).list.forEach { product ->
+                  val pojo = pojoProductDetail(product.id!!)
 
-                pojo.name = product.name!!
-                pojo.description = product.description!!
-                pojo.imageUrl = product.mainImage?.img!!
+                  pojo.name = product.name!!
+                  pojo.description = product.description!!
+                  pojo.imageUrl = product.mainImage?.img!!
 
-                pojo.userImage = product.user?.img!!
-                pojo.userEmail = product.name
-                pojo.userName = product.user.name!!
-                pojo.userId = product.user.id.toString()
-                pojo.isFav = product.fav.isFavorite()
+                  pojo.userImage = product.user?.img!!
+                  pojo.userEmail = product.name
+                  pojo.userName = product.user.name!!
+                  pojo.userId = product.user.id.toString()
+                  pojo.isFav = product.fav.isFavorite()
 
-                pList.add(pojo)
-            }
+                  pList.add(pojo)
+              }
 
 
-            val intent = Intent(context, SubCategoryActivity::class.java)
-            intent.putExtra("title", "Top In Your City")
-            intent.putExtra("list", pList.toTypedArray())
-            intent.putExtra("isShowList", true)
-            startActivity(intent)
+              val intent = Intent(context, SubCategoryActivity::class.java)
+              intent.putExtra("title", "Top In Your City")
+              intent.putExtra("list", pList.toTypedArray())
+              intent.putExtra("isShowList", true)
+              startActivity(intent)*/
+
         }
         /*   quickFirstView.name.run {
                text = "Create"
@@ -193,7 +209,7 @@ class HomeFragment : Fragment() {
            quickFirstView.setOnClickListener { startActivity(Intent(context, CreatePostActivity::class.java)) }
    */
 
-
+        getHomeData()
     }
 
     private fun checkAppVersion(currentVersion: Float) {
@@ -277,7 +293,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getHomeData()
+
     }
 
     private fun getHomeData() {
@@ -370,5 +386,79 @@ class HomeFragment : Fragment() {
         }
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(browserIntent)
+    }
+
+    private fun hitSeeAllApi(type: String) {
+        co.showLoading()
+        Api.getApi().getSeeAllProducts(co.getStringPrams(), co.getAppLanguage().langCode(), type)
+                .enqueue(object : Callback<ResponseBody> {
+
+                    override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                        val body = response.body()
+                        val jo = JSONObject(body?.string())
+
+                        if (jo.getString("code") == "0") {
+
+
+                            val data = if ("toplatest" == type) {
+                                jo.getJSONArray("data").toString()
+                                //jo.getJSONArray("latest_products").toString()
+                            } else if ("topcountry" == type) {
+                                jo.getJSONArray("data").toString()
+                                //jo.getJSONArray("my_country_products").toString()
+                            } else if ("topintersted" == type) {
+                                jo.getJSONArray("data").toString()
+                                //jo.getJSONArray("interested_products").toString()
+                            } else {
+                                jo.getJSONArray("data").toString()
+                                ""
+                            }
+
+                            val gsonType = object : TypeToken<List<Data>>() {};
+
+                            val list = Gson().fromJson(data, gsonType.type) as List<Data>
+
+                            showSellingItems(list)
+
+                            co.hideLoading()
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        co.myToast(t.message)
+                        Log.e("ResponseFailure: ", t.message)
+                        t.printStackTrace()
+                        co.hideLoading()
+                    }
+
+                })
+
+    }
+
+    private fun showSellingItems(sellingItemList: List<Data>) {
+
+        val pList = emptyList<pojoProductDetail>().toMutableList()
+        sellingItemList.forEach { product ->
+            val pojo = pojoProductDetail(product.id)
+
+            pojo.name = product.name
+            pojo.description = product.description
+            pojo.imageUrl = product.mainImage.img
+
+            pojo.userImage = product.user.img
+            pojo.userEmail = product.name
+            pojo.userName = product.user.name
+            pojo.userId = product.user.id.toString()
+            pojo.isFav = product.fav.isFavorite()
+
+            pList.add(pojo)
+        }
+
+        val intent = Intent(context, SubCategoryActivity::class.java)
+        intent.putExtra("title", "Top In Your City")
+        intent.putExtra("list", pList.toTypedArray())
+        intent.putExtra("isShowList", true)
+        startActivity(intent)
     }
 }

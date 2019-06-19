@@ -1,5 +1,6 @@
 package com.baddelni.baddelni.Response.categories
 
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
 import com.baddelni.baddelni.util.NetworkCode
 import com.google.gson.annotations.SerializedName
 

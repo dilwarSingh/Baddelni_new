@@ -5,9 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View.VISIBLE
 import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.home.HomeResponse
+import com.baddelni.baddelni.Response.singleAds.SingleAdsResponse
 import com.baddelni.baddelni.loginRegister.interests.InterestsActivity
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
@@ -25,12 +26,15 @@ class AdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        getHomeData()
 
         val toIntrest = intent?.extras?.getString("to").equals("Interest", true)
         val toMain = intent?.extras?.getString("to").equals("Main", true)
+        val countryId = intent?.extras?.getInt("to", 3) ?: 3
 
         val list = listOf(R.drawable.shakehand_bg_white_tint)
+
+        getHomeData(countryId)
+        intent.putExtra("countryId", countryId)
 
 
         val intent = if (toIntrest) {
@@ -51,31 +55,57 @@ class AdActivity : AppCompatActivity() {
 
     }
 
-    private fun getHomeData() {
+    private fun getHomeData(countryId: Int) {
         co.showLoading()
 
-        Api.getApi().getHomeData(co.getStringPrams(), co.getAppLanguage().langCode()).enqueue(object : Callback<HomeResponse> {
+        Api.getApi().getSingleAds(countryId.toString())
+                .enqueue(object : Callback<SingleAdsResponse> {
+                    override fun onResponse(call: Call<SingleAdsResponse>, response: Response<SingleAdsResponse>) {
 
-            override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
-                val body = response.body()
+                        val body = response.body()
 
-                body?.apply {
-                    if (code!!.isSuccess()) {
-                        val slidesItem = slides!![0]
-                        viewpager.adapter = CustomPagerAdapter(this@AdActivity, null, slidesItem)
+                        body?.apply {
+                            if (code!!.isSuccess()) {
+                                if (data != null && data.isNotEmpty())
+                                    viewpager.adapter = CustomPagerAdapter(this@AdActivity, null, data[0])
+                                else {
+                                    skipText.visibility = VISIBLE
+                                }
+                            }
+                        }
+                        co.hideLoading()
+
                     }
-                }
-                co.hideLoading()
-            }
 
-            override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
-                co.myToast(t.message)
-                Log.e("ResponseFailure: ", t.message)
-                t.printStackTrace()
-                co.hideLoading()
-            }
+                    override fun onFailure(call: Call<SingleAdsResponse>, t: Throwable) {
+                        co.myToast(t.message)
+                        Log.e("ResponseFailure: ", t.message)
+                        t.printStackTrace()
+                        co.hideLoading()
+                    }
+                })
+        /*       Api.getApi().getHomeData(co.getStringPrams(), co.getAppLanguage().langCode()).enqueue(object : Callback<HomeResponse> {
 
-        })
+                   override fun onResponse(call: Call<HomeResponse>, response: Response<HomeResponse>) {
+                       val body = response.body()
+
+                       body?.apply {
+                           if (code!!.isSuccess()) {
+                               val slidesItem = slides!![0]
+                               viewpager.adapter = CustomPagerAdapter(this@AdActivity, null, slidesItem)
+                           }
+                       }
+                       co.hideLoading()
+                   }
+
+                   override fun onFailure(call: Call<HomeResponse>, t: Throwable) {
+                       co.myToast(t.message)
+                       Log.e("ResponseFailure: ", t.message)
+                       t.printStackTrace()
+                       co.hideLoading()
+                   }
+
+               })*/
 
     }
 

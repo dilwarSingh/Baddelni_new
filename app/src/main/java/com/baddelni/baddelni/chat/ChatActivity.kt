@@ -3,7 +3,6 @@ package com.baddelni.baddelni.chat
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.account.setGlideUserImage
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
@@ -15,7 +14,8 @@ import java.util.*
 class ChatActivity : AppCompatActivity() {
 
     val co by lazy { CommonObjects(this) }
-    val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub").child("GlobalRoom") }
+    val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub") }
+    //val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub").child("GlobalRoom") }
     val messages = emptyArray<TextMessage>().toMutableList()
     val chatAdapter by lazy { ChatAdapter(this, messages, co.getStringPrams()) }
 
@@ -25,6 +25,8 @@ class ChatActivity : AppCompatActivity() {
 
         chatListRecycler.adapter = chatAdapter
 
+        val roomId = intent?.extras?.getString("roomId") ?: "ChatHub"
+        myRef.child(roomId)
 
         profileImg.setGlideUserImage(co.getStringPrams(AppConstants.IMG_URL))
         username.text = co.getStringPrams(AppConstants.IMG_URL)
@@ -34,7 +36,6 @@ class ChatActivity : AppCompatActivity() {
         newMessageReceivedListener()
 
         button2.setOnClickListener {
-
             val mess = TextMessage("text", messageTextET.text.toString(), co.getStringPrams().toInt(), Date().time)
             myRef.push().setValue(mess)
             messageTextET.setText("")

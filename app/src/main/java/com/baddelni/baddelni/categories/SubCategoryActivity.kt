@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.categories.SubCategoryItem
+import com.baddelni.baddelni.Response.categories.categoriesNew.SubCategoryItem
 import com.baddelni.baddelni.Response.categories.product.CategoryProducts
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.packageSection.CreatePostActivity
@@ -113,7 +113,7 @@ class SubCategoryActivity : AppCompatActivity() {
             include4.showAllText.text = "${list.size} ${getString(R.string.new_add)}"
 
             val mList: MutableList<SubCategoryItem> = list
-            mList.add(0, SubCategoryItem(categoryId, "", getString(R.string.all), "", "",logo,-1))
+            mList.add(0, SubCategoryItem(categoryId, "", getString(R.string.all), "", "", logo, -1))
             catRecycler.adapter = SubCatRecyclerAdapter(this, mList
                     , productListAdapter)
 

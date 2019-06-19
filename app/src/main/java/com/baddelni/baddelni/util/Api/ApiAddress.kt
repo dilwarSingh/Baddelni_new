@@ -7,11 +7,14 @@ import com.baddelni.baddelni.Response.Notification.NotificationResponse
 import com.baddelni.baddelni.Response.PayPackages.PackageResponse
 import com.baddelni.baddelni.Response.RegisterUser
 import com.baddelni.baddelni.Response.Settings
-import com.baddelni.baddelni.Response.categories.Category
 import com.baddelni.baddelni.Response.categories.SingleProductResponse.SingleProductResponse
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
 import com.baddelni.baddelni.Response.categories.product.CategoryProducts
 import com.baddelni.baddelni.Response.home.HomeResponse
 import com.baddelni.baddelni.Response.loginResponse.LoginResponse
+import com.baddelni.baddelni.Response.sellingItems.SelllingItemResponse
+import com.baddelni.baddelni.Response.singleAds.SingleAdsResponse
+import com.baddelni.baddelni.chat.response.chatUsersResponse.ChatUserResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -46,16 +49,42 @@ interface ApiAddress {
     fun getAccountDetails(@Field("user_id") user_id: String, @Field("trans") lang: String): Call<MyAccount>
 
     @FormUrlEncoded
-    @POST("home")
+    @POST("home1")
     fun getHomeData(@Field("user_id") user_id: String, @Field("trans") lang: String): Call<HomeResponse>
 
     @FormUrlEncoded
+    @POST("single_ads")
+    fun getSingleAds(@Field("country_id") country_id: String): Call<SingleAdsResponse>
+
+    @FormUrlEncoded
+    @POST("selling_items")
+    fun getSellingItems(@Field("user_id") user_id: String): Call<SelllingItemResponse>
+
+    @FormUrlEncoded
+    @POST("seeallhome")//user_id,trans,product_type=toplatest or topcountry or topintersted
+    fun getSeeAllProducts(@Field("user_id") user_id: String,
+                          @Field("trans") trans: String,
+                          @Field("product_type") product_type: String): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("get_chats")
+    fun getChatUserList(@Field("user_id") user_id: String): Call<ChatUserResponse>
+
+    @FormUrlEncoded
     @POST("categories")
-    fun getCategoriesAndSubCats(@Field("trans") lang: String): Call<Category>
+    fun getCategoriesAndSubCats(@Field("trans") lang: String): Call<CategoriesResponse>
+
+    @FormUrlEncoded
+    @POST("categories")
+    fun getCategoriesAndSelling(@Field("trans") lang: String,@Field("selling") selling: String): Call<CategoriesResponse>
 
     @FormUrlEncoded
     @POST("category")
     fun getCategoriesProduct(@Field("user_id") user_id: String, @Field("category_id") category_id: Int, @Field("trans") lang: String): Call<CategoryProducts>
+
+    @FormUrlEncoded
+    @POST("product views")
+    fun markProductView(@Field("user_id") user_id: String, @Field("product_id") product_id: Int): Call<ResponseBody>
 
     @FormUrlEncoded
     @POST("setting")

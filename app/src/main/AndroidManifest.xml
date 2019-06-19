@@ -28,7 +28,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".packageSection.ItemSelectionActivity"></activity>
+        <activity android:name=".search.SearchActivity"></activity>
+        <activity android:name=".packageSection.ItemSelectionActivity" />
         <activity android:name=".loginRegister.GuestLoginActivity" />
 
         <service android:name=".fcm_services.MyFirebaseMessageingService">

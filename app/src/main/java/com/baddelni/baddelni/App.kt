@@ -14,6 +14,7 @@ import io.fabric.sdk.android.Fabric
 class App : Application() {
     companion object {
         var replacementsItem: List<ReplacementsItem>? = null
+        var fromSelling = false
     }
 
     override fun onCreate() {

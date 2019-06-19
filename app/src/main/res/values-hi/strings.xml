@@ -189,4 +189,11 @@
     <string name="sureLogin">क्या आप वाकई लॉग इन करना चाहते हैं?</string>
     <string name="selling_items">आइटम बेचना</string>
     <string name="price">मूल्य</string>
+    <string name="enterPrice">मूल्य दर्ज करें</string>
+    <string name="successfuly_republished">सफलतापूर्वक पुनर्प्रकाशित</string>
+    <string name="noAdAvaliable">आपके देश के लिए कोई विज्ञापन उपलब्ध नहीं है</string>
+    <string name="make_the_ad_special">विज्ञापन विशेष बनाएं</string>
+    <string name="baddline_items">बैडलाइन आइटम</string>
+    <string name="minutes">मिनट</string>
+    <string name="hours">घंटे</string>
 </resources>

@@ -22,8 +22,8 @@ android {
         applicationId "com.baddelni.baddelni"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 53
-        versionName "2.8"
+        versionCode 59
+        versionName "2.7.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -76,6 +76,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
     implementation 'com.google.firebase:firebase-database:16.0.6'
+
+    implementation 'joda-time:joda-time:2.10.2'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

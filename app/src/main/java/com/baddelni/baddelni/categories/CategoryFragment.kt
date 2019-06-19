@@ -8,15 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.categories.CategoriesItem
-import com.baddelni.baddelni.Response.categories.Category
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
+import com.baddelni.baddelni.Response.home.SlidesItem
 import com.baddelni.baddelni.packageSection.CreatePostActivity
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
-import com.baddelni.baddelni.util.GlobalSharing
 import kotlinx.android.synthetic.main.fragment_categories.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,7 +35,7 @@ class CategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        createBanners()
+
         subCatRecycler.isNestedScrollingEnabled = false
         backBt.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
@@ -49,19 +50,13 @@ class CategoryFragment : Fragment() {
             } else
                 startActivity(Intent(context, CreatePostActivity::class.java))
         }
-        getCategoriesData()
 
-        getGridList()
+        getCategoriesData(App.fromSelling)
+
     }
 
-    private fun getGridList() {
-        subCatRecycler.adapter = CategorySubCatAdapter(context!!, GlobalSharing.topInYourCity!!)
-    }
-
-    private fun createBanners() {
-
+    private fun createBanners(sliderList: List<SlidesItem>) {
         val banners: ArrayList<Banner> = arrayListOf()
-        val sliderList = GlobalSharing.bannerAdds
 
         sliderList.forEach {
             val remoteBanner = RemoteBanner(it.img)
@@ -86,23 +81,30 @@ class CategoryFragment : Fragment() {
         startActivity(browserIntent)
     }
 
-    fun getCategoriesData() {
+    fun getCategoriesData(isSelling: Boolean) {
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<Category> {
 
-            override fun onResponse(call: Call<Category>?, response: Response<Category>?) {
+        val api = if (isSelling)
+            Api.getApi().getCategoriesAndSelling(co.getAppLanguage().langCode(), "1")
+        else
+            Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode())
 
+        api.enqueue(object : Callback<CategoriesResponse> {
+
+            override fun onResponse(call: Call<CategoriesResponse>?, response: Response<CategoriesResponse>?) {
                 response?.body()?.apply {
                     if (code!!.isSuccess()) {
-                        categories?.add(0, CategoriesItem("", "", "", null, "", getString(R.string.all), -1, getString(R.string.all)))
+                        categories.add(0, CategoriesItem("", "", "", null, "", getString(R.string.all), -1, getString(R.string.all)))
                         recycler.adapter = AdapterCategories(context!!, categories as List<CategoriesItem>)
+                        subCatRecycler.adapter = CategorySubCatAdapter(context!!, data)
 
+                        createBanners(sliders)
                     }
                 }
                 co.hideLoading()
             }
 
-            override fun onFailure(call: Call<Category>?, t: Throwable) {
+            override fun onFailure(call: Call<CategoriesResponse>?, t: Throwable) {
                 co.myToast(t.message)
                 Log.e("ResponseFailure: ", t.message)
                 t.printStackTrace()

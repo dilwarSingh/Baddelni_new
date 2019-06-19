@@ -9,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.home.SlidesItem
+import com.baddelni.baddelni.Response.singleAds.Data
 import com.baddelni.baddelni.util.CommonObjects
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int>?, val networkImage: SlidesItem? = null) : PagerAdapter() {
+class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int>?, val networkImage: Data? = null) : PagerAdapter() {
 
     override fun instantiateItem(collection: ViewGroup, position: Int): Any {
         val inflater = LayoutInflater.from(mContext)
@@ -33,7 +33,7 @@ class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int
                     .load(networkImage?.img)
                     .into(imageView)
             layout.setOnClickListener {
-                openBrowserWithLink(networkImage?.link ?: "")
+                openBrowserWithLink(networkImage?.img ?: "")
 
             }
         }

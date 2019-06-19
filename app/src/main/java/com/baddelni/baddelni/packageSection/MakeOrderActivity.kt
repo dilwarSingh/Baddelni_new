@@ -13,10 +13,10 @@ import android.util.Log
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.categories.CategoriesItem
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
 import com.baddelni.baddelni.Response.categories.Category
+import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
 import com.baddelni.baddelni.account.setGlideImage
-import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.account.setGlideUserImage
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
@@ -280,9 +280,9 @@ class MakeOrderActivity : AppCompatActivity() {
 
     fun getCategoriesData() {
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<Category> {
+        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
 
-            override fun onResponse(call: Call<Category>, response: Response<Category>) {
+            override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
                 val body = response.body()
 
                 body?.apply {
@@ -297,7 +297,7 @@ class MakeOrderActivity : AppCompatActivity() {
                 co.hideLoading()
             }
 
-            override fun onFailure(call: Call<Category>, t: Throwable) {
+            override fun onFailure(call: Call<CategoriesResponse>, t: Throwable) {
                 co.myToast(t.message)
                 Log.e("ResponseFailure: ", t.message)
                 t.printStackTrace()

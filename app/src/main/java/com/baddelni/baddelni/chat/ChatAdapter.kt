@@ -26,7 +26,6 @@ class ChatAdapter(val context: Context, val messages: List<TextMessage>, val use
             return SendTextMessageVH(binding)
 
         } else {
-
             val binding: ItemMessageRecivedBinding =
                     DataBindingUtil.inflate(LayoutInflater.from(context),
                             R.layout.item_message_recived, parent, false)
@@ -53,6 +52,5 @@ class ChatAdapter(val context: Context, val messages: List<TextMessage>, val use
             viewHolder.b.message.text = message.message
             viewHolder.b.time.text = message.time.toString()
         }
-
     }
 }

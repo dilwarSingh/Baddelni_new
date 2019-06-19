@@ -356,10 +356,12 @@ class LoginFragment : Fragment() {
                                 val intent = Intent(context, AdActivity::class.java)
                                 intent.putExtra("toScreen", "home")
                                 intent.putExtra("to", "Interest")
+                                intent.putExtra("countryId", countryId)
                                 context?.startActivity(intent)
                             } else {
                                 val intent = Intent(context, AdActivity::class.java)
                                 intent.putExtra("to", "main")
+                                intent.putExtra("countryId", countryId)
                                 context?.startActivity(intent)
                             }
                         }

@@ -190,4 +190,11 @@
     <string name="sureLogin">هل انت متاكد من تسجيل الدخول؟</string>
     <string name="price">السعر</string>
     <string name="selling_items">بيع الأصناف</string>
+    <string name="enterPrice">أدخل السعر</string>
+    <string name="successfuly_republished">تم إعادة النشر بنجاح</string>
+    <string name="noAdAvaliable">لا يوجد إعلان متاح لبلدك</string>
+    <string name="make_the_ad_special">اجعل الإعلان مميز</string>
+    <string name="baddline_items">بدلني العناصر</string>
+    <string name="minutes">الدقائق</string>
+    <string name="hours">ساعات</string>
 </resources>
