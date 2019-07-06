@@ -7,7 +7,7 @@ import com.baddelni.baddelni.util.NetworkCode
 import com.google.gson.annotations.SerializedName
 
 data class CategoriesResponse(
-        @field:SerializedName("code")
+        @SerializedName("code")
         val code: NetworkCode? = null,
 
         @SerializedName("data")
@@ -22,3 +22,5 @@ data class CategoriesResponse(
         @SerializedName("sliders")
         val sliders: List<SlidesItem>
 )
+
+// --> POST https://baddelni.com/developbaddelni/public/api/categories http/1.1

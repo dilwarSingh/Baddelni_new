@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.account.pojos.pojoAccountHome
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
@@ -39,13 +40,14 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
         viewHolder.binding.root.setOnClickListener {
             val intent = Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("pId", list[viewHolder.adapterPosition].pId)
+            App.showUserProducts = false
             context.startActivity(intent)
         }
         viewHolder.binding.saveBt.visibility = View.INVISIBLE
         viewHolder.binding.shareBt.visibility = View.INVISIBLE
         viewHolder.binding.saveBt.width = 0
         viewHolder.binding.imageView8.visibility = View.INVISIBLE
-
+        // viewHolder.binding.timeView.text = App.getTimeDetail(viewHolder.binding.image.context, list[postion].timeStramp)
 
         /*  viewHolder.binding.saveBt.setOnClickListener {
               co.MarkProductFav(list[viewHolder.adapterPosition].pId.toString(), favCount)
@@ -57,6 +59,7 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
             val intent = Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("pId", list[viewHolder.adapterPosition].pId)
             intent.putExtra("isMy", true)
+            App.showUserProducts = false
             intent.putExtra("isFav", list[viewHolder.adapterPosition].isFav)
 
             context.startActivity(intent)
@@ -139,7 +142,6 @@ class AdapterAccountHome(val context: Context, val list: MutableList<pojoAccount
                 val intent = Intent(context, EditPostActivity::class.java)
                 intent.putExtra("pid", list[adapterPosition].pId)
                 context.startActivity(intent)
-
                 mypopupWindow.dismiss()
             }
 

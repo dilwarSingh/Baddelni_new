@@ -10,6 +10,8 @@ import com.baddelni.baddelni.chat.viewHolders.ReceivedTextMessageVH
 import com.baddelni.baddelni.chat.viewHolders.SendTextMessageVH
 import com.baddelni.baddelni.databinding.ItemMessageRecivedBinding
 import com.baddelni.baddelni.databinding.ItemMessageSentBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChatAdapter(val context: Context, val messages: List<TextMessage>, val userId: String) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -46,11 +48,18 @@ class ChatAdapter(val context: Context, val messages: List<TextMessage>, val use
 
         if (viewHolder is SendTextMessageVH) {
             viewHolder.b.message.text = message.message
-            viewHolder.b.time.text = message.time.toString()
+            viewHolder.b.time.text = getTime(message.time)
 
         } else if (viewHolder is ReceivedTextMessageVH) {
             viewHolder.b.message.text = message.message
-            viewHolder.b.time.text = message.time.toString()
+            viewHolder.b.time.text = getTime(message.time)
         }
+    }
+
+    fun getTime(time: Long): String {
+
+        val date = Date(time)
+        val sdf = SimpleDateFormat("yyyy/MMM/dd, hh:mm", Locale.US)
+        return sdf.format(date)
     }
 }

@@ -15,13 +15,14 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.afollestad.materialdialogs.MaterialDialog
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.Countries.Countries
 import com.baddelni.baddelni.Response.Countries.CountriesItem
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
-import com.baddelni.baddelni.Response.categories.Category
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
 import com.baddelni.baddelni.Response.categories.categoriesNew.SubCategoryItem
+import com.baddelni.baddelni.Response.home.MyProductsItem
 import com.baddelni.baddelni.account.setGlideImage
 import com.baddelni.baddelni.account.setGlideUserImage
 import com.baddelni.baddelni.databinding.ActivityCreatePostNewBinding
@@ -31,6 +32,7 @@ import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
 import com.baddelni.baddelni.util.GlobalSharing
 import com.baddelni.baddelni.util.YesNoInterface
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_post_new.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -457,6 +459,13 @@ class CreatePostActivity : AppCompatActivity() {
                             val jsonObject = JSONObject(jString)
                             if (jsonObject.getString("code") == "0") {
                                 co.putStringPrams(AppConstants.AVALIABLE_POSTS, co.getStringPrams(AppConstants.AVALIABLE_POSTS).toInt().minus(1).toString())
+
+                                val myProductsItem = Gson().fromJson(jsonObject.getJSONObject("data").toString(), MyProductsItem::class.java)
+
+                                val value = App.homeData.value
+                                value?.myProducts?.add(0, myProductsItem)
+                                App.homeData.value = value
+
                                 co.showToastDialog(detail = getString(R.string.postAddedSuccessful), yesNo = object : YesNoInterface {
                                     override fun onClickYes() {
                                         onBackPressed()
@@ -586,7 +595,7 @@ class CreatePostActivity : AppCompatActivity() {
 
     fun getCategoriesData() {
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
+        Api.getApi().getCategoriesAndSubCats(co.getStringPrams(),co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
 
             override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
                 val body = response.body()

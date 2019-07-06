@@ -23,7 +23,8 @@ class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int
         val imageView = layout.findViewById<ImageView>(R.id.image)
         if (imagesList != null) {
             val image = getImage(position)
-            imageView.setImageDrawable((collection.context).resources.getDrawable(image))
+            Glide.with(imageView).asDrawable().load(image).into(imageView)
+            //  imageView.setImageDrawable((collection.context).resources.getDrawable(image))
         } else {
             Glide.with(imageView)
                     .setDefaultRequestOptions(
@@ -33,7 +34,7 @@ class CustomPagerAdapter(private val mContext: Context, val imagesList: List<Int
                     .load(networkImage?.img)
                     .into(imageView)
             layout.setOnClickListener {
-                openBrowserWithLink(networkImage?.img ?: "")
+                openBrowserWithLink(networkImage?.adsLink ?: "")
 
             }
         }

@@ -236,6 +236,7 @@ class AccountHomeFragment : Fragment() {
                                     listObj.productImage = it.mainImage!!.img!!
                                     listObj.isFav = it.fav.isFavorite()
                                     listObj.expire = it.expire
+                                    listObj.timeStramp = it.timestamp
 
 
                                     if (!it.replacements.isNullOrEmpty()) {
@@ -282,7 +283,7 @@ class AccountHomeFragment : Fragment() {
 }
 
 fun ImageView.setGlideImageNetworkPath(imagePath: String, makeRound: Boolean = true) {
-    val ro = RequestOptions()
+    val ro = RequestOptions()//.override(800, 800)
     if (makeRound)
         ro.circleCrop()
     else ro.centerCrop()

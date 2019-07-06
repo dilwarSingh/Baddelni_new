@@ -32,7 +32,7 @@ class QuickAdapter(val context: Context, val list: List<MyProductsItem>) : Recyc
 
         Glide.with(context)
                 .applyDefaultRequestOptions(ro)
-                .load(data.mainImage?.img!!)
+                .load(data.mainImage?.img)
                 .into(holder.image)
 
         holder.text.text = data.name

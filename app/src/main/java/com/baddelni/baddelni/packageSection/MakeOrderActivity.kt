@@ -14,7 +14,6 @@ import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
-import com.baddelni.baddelni.Response.categories.Category
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
 import com.baddelni.baddelni.account.setGlideImage
 import com.baddelni.baddelni.account.setGlideUserImage
@@ -263,7 +262,7 @@ class MakeOrderActivity : AppCompatActivity() {
                 .addFormDataPart("name", badName.text.toString())
                 .addFormDataPart("trans", co.getAppLanguage().langCode())
                 .addFormDataPart("product_id", pId.toString())
-         //       .addFormDataPart("phone", phoneNoBd.toString())
+        //       .addFormDataPart("phone", phoneNoBd.toString())
 
 
         if (badliniImage != null) {
@@ -280,7 +279,7 @@ class MakeOrderActivity : AppCompatActivity() {
 
     fun getCategoriesData() {
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
+        Api.getApi().getCategoriesAndSubCats(co.getStringPrams(), co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
 
             override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
                 val body = response.body()

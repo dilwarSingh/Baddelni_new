@@ -35,12 +35,13 @@ class MyFirebaseMessageingService : FirebaseMessagingService() {
 
 
         }*/
-        rMessage?.notification?.let {
-            Log.d(TAG, "Message Notification Body: ${it.body}")
+        rMessage?.data?.let {
 
+            val type = it["type"] ?: ""
+            val alert = it["alert"] ?: ""
+            Log.d(TAG, "Message Notification Body: $alert")
 
-            val type = rMessage.data["type"] ?: ""
-            sendNotification(it.body!!, type, null, null)
+            sendNotification(alert, type, null, null)
         }
 
 

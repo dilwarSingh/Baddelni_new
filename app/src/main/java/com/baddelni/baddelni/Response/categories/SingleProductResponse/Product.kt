@@ -26,7 +26,7 @@ data class Product(
         @field:SerializedName("updated_at")
         val updatedAt: String? = null,
 
-        @field:SerializedName("timestamp")
+        @field:SerializedName("timestamp1")
         val timestamp: Long? = null,
 
         @field:SerializedName("user_id")

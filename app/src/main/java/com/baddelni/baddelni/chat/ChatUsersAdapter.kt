@@ -1,5 +1,6 @@
 package com.baddelni.baddelni.chat
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,15 @@ class ChatUsersAdapter(val list: List<Data>) : RecyclerView.Adapter<ChatUsersAda
 
         vh.name.text = data.receiverData.name
         vh.message.text = data.product.name
+
+
+
+        vh.itemView.setOnClickListener {
+            val intent = Intent(vh.itemView.context, ChatActivity::class.java)
+            intent.putExtra("roomId", data.chatId.toString())
+            vh.itemView.context.startActivity(intent)
+
+        }
     }
 
 

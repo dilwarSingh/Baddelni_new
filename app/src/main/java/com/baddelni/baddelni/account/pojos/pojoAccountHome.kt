@@ -11,4 +11,5 @@ data class pojoAccountHome(val pId: Int) {
     var img2: String = ""
     var isFav = false
     var expire = 0
+    var timeStramp = 0L
 }

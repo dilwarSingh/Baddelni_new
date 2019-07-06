@@ -11,6 +11,7 @@ import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.Countries.Countries
 import com.baddelni.baddelni.Response.Countries.CountriesItem
+import com.baddelni.baddelni.intro.AdActivity
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
@@ -37,7 +38,11 @@ class GuestLoginActivity : AppCompatActivity() {
             LocaleHelper.setLocale(this, appLanguage.langCode())
         }
         if (co.getBool(AppConstants.LOGGED_IN)) {
-            startActivity(Intent(this@GuestLoginActivity, MainActivity::class.java))
+            val countryId = co.getStringPrams(AppConstants.COUNTRY_ID).toInt()
+            val intent = Intent(this@GuestLoginActivity, AdActivity::class.java)
+            intent.putExtra("to", "main")
+            intent.putExtra("countryId", countryId)
+            startActivity(intent)
             finish()
         }
 

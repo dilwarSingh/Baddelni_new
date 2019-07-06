@@ -19,9 +19,14 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        val list = listOf<Int>(R.drawable.intro_home_ar,
-                R.drawable.intro_post_ar,
-                R.drawable.intro_item_ar)
+        val list = if (co.getAppLanguage() == AppLanguage.ARABIC)
+            listOf(R.drawable.android_ar_1,
+                    R.drawable.android_ar_2,
+                    R.drawable.android_ar_3)
+        else
+            listOf(R.drawable.android_en_1,
+                    R.drawable.android_en_2,
+                    R.drawable.android_en_3)
 
         viewpager.adapter = CustomPagerAdapter(this, list)
 
@@ -35,7 +40,6 @@ class IntroActivity : AppCompatActivity() {
         } else {
             co.putBool(AppConstants.IS_INTRO_ALREADY_SHOWN, true)
         }
-
     }
 
     override fun attachBaseContext(base: Context) {

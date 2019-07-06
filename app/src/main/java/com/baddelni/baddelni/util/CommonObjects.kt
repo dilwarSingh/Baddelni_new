@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.R
+import com.baddelni.baddelni.Response.home.MyProductsItem
 import com.baddelni.baddelni.account.adapters.AdapterAccountHome
 import com.baddelni.baddelni.account.pojos.pojoAccountHome
 import com.baddelni.baddelni.loginRegister.GuestLoginActivity
@@ -209,6 +211,18 @@ class CommonObjects(private val context: Context) {
 
 
                         if (jsonObject.getString("code") == "0") {
+
+                            val value = App.homeData.value
+                            var deleteObj: MyProductsItem? = null
+                            value?.myProducts?.forEach {
+                                if (it.id == product_id.toInt()) {
+                                    deleteObj = it
+                                    return@forEach
+                                }
+                            }
+                            value?.myProducts?.remove(deleteObj)
+                            App.homeData.value = value
+
                             adapterAccountHome.notifyItemRemoved(adapterPosition)
                             list.removeAt(adapterPosition)
                         } else {

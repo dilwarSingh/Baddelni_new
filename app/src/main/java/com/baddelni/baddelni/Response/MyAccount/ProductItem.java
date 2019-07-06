@@ -55,6 +55,9 @@ public class ProductItem {
     @SerializedName("status")
     private int status;
 
+    @SerializedName("timestamp1")
+    private long timestamp;
+
     public int getExpire() {
         return expire;
     }
@@ -181,6 +184,14 @@ public class ProductItem {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override

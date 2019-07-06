@@ -139,7 +139,7 @@ class InterestsActivity : AppCompatActivity() {
     private fun getData() {
 
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
+        Api.getApi().getCategoriesAndSubCats(co.getStringPrams(),co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
 
             override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
                 val body = response.body()

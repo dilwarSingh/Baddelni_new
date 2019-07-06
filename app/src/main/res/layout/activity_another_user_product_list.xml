@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.anotherUser.AnotherUserProductList">
+
+    <ImageButton
+        android:id="@+id/backBt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@color/transparent"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImg2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profileImg2"
+        app:srcCompat="@drawable/back_brown" />
+
+    <ImageView
+        android:id="@+id/profileImg2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/backBt2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/account_selected" />
+
+    <TextView
+        android:id="@+id/username2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="user name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImg2"
+        app:layout_constraintEnd_toStartOf="@+id/notoficationCount2"
+        app:layout_constraintStart_toEndOf="@+id/profileImg2"
+        app:layout_constraintTop_toTopOf="@+id/profileImg2" />
+
+    <TextView
+        android:id="@+id/notoficationCount2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/left_round_primary"
+        android:padding="4dp"
+        android:text="@string/posts"
+        android:textColor="@color/whiteText"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/username2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/username2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImg2" />
+</android.support.constraint.ConstraintLayout>

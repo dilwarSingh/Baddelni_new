@@ -47,7 +47,6 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginEnd="4dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/profileImage"
         app:layout_constraintEnd_toStartOf="@+id/orderBt"
         app:layout_constraintTop_toTopOf="@+id/profileImage"
@@ -135,14 +134,13 @@
         app:srcCompat="@drawable/in" />
 
     <TextView
-        android:id="@+id/textView27"
+        android:id="@+id/countryTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/country_flag"
         android:gravity="center"
-        android:text="Loaction"
+        tools:text="Loaction"
         android:textSize="12sp"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -156,9 +154,8 @@
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/countryTv"
         tools:text="Time" />
 
     <TextView

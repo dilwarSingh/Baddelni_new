@@ -29,7 +29,7 @@ class AdActivity : AppCompatActivity() {
 
         val toIntrest = intent?.extras?.getString("to").equals("Interest", true)
         val toMain = intent?.extras?.getString("to").equals("Main", true)
-        val countryId = intent?.extras?.getInt("to", 3) ?: 3
+        val countryId = intent?.extras?.getInt("countryId", 3) ?: 3
 
         val list = listOf(R.drawable.shakehand_bg_white_tint)
 

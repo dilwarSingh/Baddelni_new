@@ -5,6 +5,7 @@ class AppConstants {
         val IMG_URL = "IMG_URL"
         val PERSON_NAME = "PERSON_NAME"
         const val USER_ID = "USER_ID"
+        const val COUNTRY_ID = "COUNTRY_ID"
         const val GuestUserId = "1"
         const val GUEST_USER_ID = "GUEST_USER_ID"
         const val AVALIABLE_POSTS = "AVALIABLE_POSTS"

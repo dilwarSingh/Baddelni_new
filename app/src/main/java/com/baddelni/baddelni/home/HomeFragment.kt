@@ -26,6 +26,7 @@ import com.baddelni.baddelni.account.setGlideUserImage
 import com.baddelni.baddelni.categories.SubCategoryActivity
 import com.baddelni.baddelni.categories.pojoProductDetail
 import com.baddelni.baddelni.chat.ChatListActivity
+import com.baddelni.baddelni.home.searchActivity.SearchActivity
 import com.baddelni.baddelni.packageSection.CreatePostActivity
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
@@ -56,9 +57,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chatBt.visibility = GONE
 
-    //    checkAppVersion(2.7F)
+        //   checkAppVersion(2.8F)
+
+        getHomeData()
+
+        /*  if (App.homeData.value == null) {
+          }
+          App.homeData.observe(this, Observer {
+            homeDataParsing(it)
+          })*/
 
         if (co.getStringPrams() == AppConstants.GuestUserId) {
             //     quickView.visibility = GONE
@@ -68,7 +76,7 @@ class HomeFragment : Fragment() {
             co.putStringPrams(AppConstants.IMG_URL, "")
             co.putStringPrams(AppConstants.PERSON_NAME, getString(R.string.guestUser))
         } else {
-            accountData()
+            // accountData()
             profileImg.setOnClickListener {
                 val intent = Intent(context, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -76,10 +84,14 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
+        chatBt.visibility = GONE
+
         profileImg.setGlideUserImage(co.getStringPrams(AppConstants.IMG_URL))
         username.text = co.getStringPrams(AppConstants.PERSON_NAME)
 
-
+        searchBt.setOnClickListener {
+            startActivity(Intent(context!!, SearchActivity::class.java))
+        }
         fabCreatePost.setOnClickListener {
             if (co.getStringPrams() == AppConstants.GuestUserId) {
                 co.showLoginDialog(getString(R.string.dont_have_permission))
@@ -208,8 +220,8 @@ class HomeFragment : Fragment() {
            }
            quickFirstView.setOnClickListener { startActivity(Intent(context, CreatePostActivity::class.java)) }
    */
+        // getHomeData()
 
-        getHomeData()
     }
 
     private fun checkAppVersion(currentVersion: Float) {
@@ -228,7 +240,7 @@ class HomeFragment : Fragment() {
                                 val appPackageName = context!!.packageName; // package name of the app
                                 try {
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                } catch (anfe: ActivityNotFoundException) {
+                                } catch (e: ActivityNotFoundException) {
                                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                                 }
                             }
@@ -276,7 +288,7 @@ class HomeFragment : Fragment() {
                             GlobalSharing.postCount = availableProduct
                             profileImg?.setGlideUserImage(co.getStringPrams(AppConstants.IMG_URL))
                             username?.text = co.getStringPrams(AppConstants.PERSON_NAME)
-
+                            co.putStringPrams(AppConstants.COUNTRY_ID, countryId.toString())
                         }
                     }
                 }
@@ -307,24 +319,8 @@ class HomeFragment : Fragment() {
 
                 body?.apply {
                     if (code!!.isSuccess()) {
-
-
-                        if (co.getStringPrams() != AppConstants.GuestUserId) {
-                            quickRecycler.adapter = QuickAdapter(context!!, myProducts
-                                    ?: emptyList())
-                        }
-                        GlobalSharing.topInYourCity = myCountryProducts
-                        quickRecycler.adapter = QuickAdapter(context!!, myProducts!!)
-                        topCity.adapter = TopCityAdapter(context!!, myCountryProducts!!)
-                        latestRecycler.adapter = LatestAdapter(context!!, latestProducts!!)
-                        yourIntrest.adapter = TopIntrestAdapter(context!!, interestedProducts!!)
-                        sliderList = slides!!
-                        this@HomeFragment.ads = ads!!
-                        GlobalSharing.adUrls.addAll(ads)
-                        createBanners()
-                        createAdsSlider()
-
-                        //      homeSlider.sliderAdapter = HomeSliderAdapter(slides!!)
+                        homeDataParsing(body)
+                        App.homeData.value = body
                     }
 
                 }
@@ -340,6 +336,34 @@ class HomeFragment : Fragment() {
 
         })
 
+    }
+
+    private fun homeDataParsing(body: HomeResponse?) {
+        body?.apply {
+            if (co.getStringPrams() != AppConstants.GuestUserId) {
+                quickRecycler.adapter = QuickAdapter(context!!, myProducts
+                        ?: emptyList())
+            }
+            GlobalSharing.topInYourCity = myCountryProducts
+            quickRecycler.adapter = QuickAdapter(context!!, myProducts!!)
+            topCity.adapter = TopCityAdapter(context!!, myCountryProducts!!)
+            latestRecycler.adapter = LatestAdapter(context!!, latestProducts!!)
+            yourIntrest.adapter = TopIntrestAdapter(context!!, interestedProducts!!)
+
+
+            try {
+                this@HomeFragment.ads = ads!!
+                GlobalSharing.adUrls.addAll(ads)
+                createAdsSlider()
+
+                sliderList = slides!!
+                createBanners()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            //      homeSlider.sliderAdapter = HomeSliderAdapter(slides!!)
+
+        }
     }
 
     private fun createAdsSlider() {

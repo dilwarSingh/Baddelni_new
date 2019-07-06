@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.afollestad.materialdialogs.MaterialDialog
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.Countries.Countries
@@ -158,8 +159,12 @@ class SettingsFragment : Fragment() {
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         val jo = JSONObject(response.body()?.string())
                         if (jo.getString("code") == "0") {
+                            co.putStringPrams(AppConstants.COUNTRY_ID, countryId.toString())
+
+
                             co.showToastDialog(getString(R.string.app_name), getString(R.string.updateSuccessful), object : YesNoInterface {
                                 override fun onClickYes() {
+                                    App.homeData.value = null
                                     val intent = Intent(context, MainActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     intent.putExtra("tabLocation", 0)

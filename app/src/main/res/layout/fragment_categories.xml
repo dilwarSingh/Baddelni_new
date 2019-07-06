@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,6 +50,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/back_brown" />
 
+            <ImageView
+                android:id="@+id/searchBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_search" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="0dp"
@@ -78,7 +90,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabCreatePost"

@@ -24,8 +24,8 @@ class Api {
             httpClient.writeTimeout(0, TimeUnit.SECONDS)
 
             val retrofit = Retrofit.Builder()
-                    //.baseUrl("https://baddelni.com/developbaddelni/public/api/")
-                          .baseUrl("https://baddelni.com/api/")
+                   //  .baseUrl("https://baddelni.com/developbaddelni/public/api/")
+                    .baseUrl("https://baddelni.com/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(httpClient.build())
                     .build()

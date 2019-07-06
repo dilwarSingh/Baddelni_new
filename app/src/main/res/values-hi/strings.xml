@@ -184,7 +184,7 @@
     <string name="republish">पुन: प्रकाशित करें</string>
     <string name="all">सब</string>
     <string name="new_add">नया जोड़ें</string>
-    <string name="newVersionAvaliable">कृपया अपडेट करें, नया संस्करण अब उपलब्ध है</string>
+    <string name="newVersionAvaliable">हमने वर्तमान संस्करण में बग को ठीक किया। कृपया बेहतर उपयोगकर्ता अनुभव के लिए एप्लिकेशन के नवीनतम संस्करण में अपडेट करें।</string>
     <string name="update">अद्यतन करें</string>
     <string name="sureLogin">क्या आप वाकई लॉग इन करना चाहते हैं?</string>
     <string name="selling_items">आइटम बेचना</string>
@@ -196,4 +196,8 @@
     <string name="baddline_items">बैडलाइन आइटम</string>
     <string name="minutes">मिनट</string>
     <string name="hours">घंटे</string>
+    <string name="find">खोज</string>
+    <string name="in_chat">बातचीत में</string>
+    <string name="load_all_items">सभी आइटम लोड करें</string>
+    <string name="no_data_found_with_your_search">आपकी खोज के साथ कोई डेटा नहीं मिला</string>
 </resources>

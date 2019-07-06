@@ -27,7 +27,7 @@ class AdapterCategories(private var context: Context, val list: List<CategoriesI
         val category = list[position]
         viewHolder.text.text = if (co.getAppLanguage().isEnglish()) category.category else category.categoryAr
         category.img?.let { viewHolder.image.setGlideImageNetworkPath(it) }
-
+        viewHolder.setIsRecyclable(false)
         if (position > 0) {
             viewHolder.itemView.setOnClickListener {
                 val categoriesItem = list[viewHolder.adapterPosition]

@@ -14,6 +14,7 @@ import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesItem
 import com.baddelni.baddelni.Response.categories.categoriesNew.CategoriesResponse
 import com.baddelni.baddelni.Response.home.SlidesItem
+import com.baddelni.baddelni.home.searchActivity.SearchActivity
 import com.baddelni.baddelni.packageSection.CreatePostActivity
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
@@ -43,6 +44,8 @@ class CategoryFragment : Fragment() {
             intent.putExtra("tabLocation", 0)
             startActivity(intent)
         }
+
+        searchBt.setOnClickListener { startActivity(Intent(context, SearchActivity::class.java)) }
 
         fabCreatePost.setOnClickListener {
             if (co.getStringPrams() == AppConstants.GuestUserId) {
@@ -85,9 +88,9 @@ class CategoryFragment : Fragment() {
         co.showLoading()
 
         val api = if (isSelling)
-            Api.getApi().getCategoriesAndSelling(co.getAppLanguage().langCode(), "1")
+            Api.getApi().getCategoriesAndSelling(co.getStringPrams(), co.getAppLanguage().langCode(), "1")
         else
-            Api.getApi().getCategoriesAndSubCats(co.getAppLanguage().langCode())
+            Api.getApi().getCategoriesAndSubCats(co.getStringPrams(), co.getAppLanguage().langCode())
 
         api.enqueue(object : Callback<CategoriesResponse> {
 

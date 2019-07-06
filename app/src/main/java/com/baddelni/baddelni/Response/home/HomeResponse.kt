@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class HomeResponse(
 
         @field:SerializedName("my_products")
-        val myProducts: List<MyProductsItem>? = null,
+        val myProducts: MutableList<MyProductsItem>? = null,
 
         @field:SerializedName("ads")
         val ads: List<AdsItem>? = null,

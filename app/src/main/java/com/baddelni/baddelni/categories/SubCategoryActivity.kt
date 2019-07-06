@@ -45,7 +45,7 @@ class SubCategoryActivity : AppCompatActivity() {
 
         val banners: ArrayList<Banner> = arrayListOf()
         val sliderList = GlobalSharing.bannerAdds
-        recycler.setNestedScrollingEnabled(false)
+        recycler.isNestedScrollingEnabled = false
         sliderList.forEach {
             val remoteBanner = RemoteBanner(it.img)
             banners.add(remoteBanner)

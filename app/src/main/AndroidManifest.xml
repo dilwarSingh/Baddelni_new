@@ -28,7 +28,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".search.SearchActivity"></activity>
+        <activity android:name=".home.searchActivity.SearchActivity"></activity>
+        <activity android:name=".home.anotherUser.AnotherUserProductList" />
+        <activity android:name=".search.SearchActivity" />
         <activity android:name=".packageSection.ItemSelectionActivity" />
         <activity android:name=".loginRegister.GuestLoginActivity" />
 

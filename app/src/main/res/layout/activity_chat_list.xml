@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".chat.ChatListActivity">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,8 +43,8 @@
         app:layout_constraintEnd_toStartOf="@+id/textView20"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout" />
-
-    <TextView
+-->
+    <!--<TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -58,7 +58,33 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/username" />-->
+
+    <TextView
+        android:id="@+id/notoficationCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/left_round_primary"
+        android:padding="4dp"
+        android:text="@string/in_chat"
+        android:textColor="@color/whiteText"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        tools:text="user name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout4"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chatListRecycler"
@@ -68,9 +94,38 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
         tools:listitem="@layout/item_chat_list" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparent"
+            android:padding="8dp"
+            app:srcCompat="@drawable/back_brown" />
+
+        <ImageView
+            android:id="@+id/profileImg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/account_selected" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

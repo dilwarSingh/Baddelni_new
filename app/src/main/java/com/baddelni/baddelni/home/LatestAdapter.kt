@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View.GONE
 import android.view.ViewGroup
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.home.LatestProductsItem
@@ -25,7 +26,7 @@ class LatestAdapter(val context: Context, val list: List<LatestProductsItem>) : 
 
     override fun onBindViewHolder(holder: viewHolder, postion: Int) {
         val data = list[postion]
-
+        holder.binding.menuBt.visibility = GONE
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ProductDetailActivity::class.java)
             intent.putExtra("pId", list[holder.adapterPosition].id)

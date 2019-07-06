@@ -14,7 +14,9 @@ import com.baddelni.baddelni.Response.home.HomeResponse
 import com.baddelni.baddelni.Response.loginResponse.LoginResponse
 import com.baddelni.baddelni.Response.sellingItems.SelllingItemResponse
 import com.baddelni.baddelni.Response.singleAds.SingleAdsResponse
+import com.baddelni.baddelni.categories.response.CreateChatResponse
 import com.baddelni.baddelni.chat.response.chatUsersResponse.ChatUserResponse
+import com.baddelni.baddelni.home.searchActivity.response.SearchResponse
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -71,19 +73,28 @@ interface ApiAddress {
     fun getChatUserList(@Field("user_id") user_id: String): Call<ChatUserResponse>
 
     @FormUrlEncoded
-    @POST("categories")
-    fun getCategoriesAndSubCats(@Field("trans") lang: String): Call<CategoriesResponse>
+    @POST("create_chat_id")//product_id, sender_id, receiver_id, trans
+    fun createChatId(
+            @Field("product_id") product_id: String,
+            @Field("sender_id") sender_id: String,
+            @Field("receiver_id") receiver_id: String,
+            @Field("trans") trans: String
+    ): Call<CreateChatResponse>
 
     @FormUrlEncoded
     @POST("categories")
-    fun getCategoriesAndSelling(@Field("trans") lang: String,@Field("selling") selling: String): Call<CategoriesResponse>
+    fun getCategoriesAndSubCats(@Field("user_id") user_id: String, @Field("trans") lang: String): Call<CategoriesResponse>
+
+    @FormUrlEncoded
+    @POST("categories")
+    fun getCategoriesAndSelling(@Field("user_id") user_id: String, @Field("trans") lang: String, @Field("selling") selling: String): Call<CategoriesResponse>
 
     @FormUrlEncoded
     @POST("category")
     fun getCategoriesProduct(@Field("user_id") user_id: String, @Field("category_id") category_id: Int, @Field("trans") lang: String): Call<CategoryProducts>
 
     @FormUrlEncoded
-    @POST("product views")
+    @POST("productview")
     fun markProductView(@Field("user_id") user_id: String, @Field("product_id") product_id: Int): Call<ResponseBody>
 
     @FormUrlEncoded
@@ -190,5 +201,22 @@ interface ApiAddress {
             @Field("user_id") user_id: String,
             @Field("trans") trans: String
     ): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("testhome")
+    fun productSearch(//user_id,search,filter(0,1), trans
+            @Field("user_id") user_id: String,
+            @Field("search") search: String,
+            @Field("filter") filter: String,
+            @Field("trans") trans: String
+    ): Call<SearchResponse>
+
+    @FormUrlEncoded
+    @POST("testhome")
+    fun productSearch(//user_id,search,filter(0,1), trans
+            @Field("user_id") user_id: String,
+            @Field("search") search: String,
+            @Field("trans") trans: String
+    ): Call<SearchResponse>
 
 }

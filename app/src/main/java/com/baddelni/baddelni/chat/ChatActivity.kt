@@ -14,7 +14,8 @@ import java.util.*
 class ChatActivity : AppCompatActivity() {
 
     val co by lazy { CommonObjects(this) }
-    val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub") }
+    val roomId by lazy { intent?.extras?.getString("roomId") ?: "GlobalRoom" }
+    val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub").child(roomId) }
     //val myRef by lazy { FirebaseDatabase.getInstance().getReference("ChatHub").child("GlobalRoom") }
     val messages = emptyArray<TextMessage>().toMutableList()
     val chatAdapter by lazy { ChatAdapter(this, messages, co.getStringPrams()) }
@@ -25,14 +26,13 @@ class ChatActivity : AppCompatActivity() {
 
         chatListRecycler.adapter = chatAdapter
 
-        val roomId = intent?.extras?.getString("roomId") ?: "ChatHub"
         myRef.child(roomId)
 
         profileImg.setGlideUserImage(co.getStringPrams(AppConstants.IMG_URL))
-        username.text = co.getStringPrams(AppConstants.IMG_URL)
+        username.text = co.getStringPrams(AppConstants.PERSON_NAME)
         textView22.text = "You are in Community chat feel free to chat"
-
-        preloadList()
+        linearLayout.setOnClickListener { onBackPressed() }
+        //preloadList()
         newMessageReceivedListener()
 
         button2.setOnClickListener {

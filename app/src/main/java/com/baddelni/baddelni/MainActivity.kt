@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setContentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(frameLayout.id, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(frameLayout.id, fragment).commitNow()
     }
 
     fun shiftFragment(@IdRes btId: Int): Unit {

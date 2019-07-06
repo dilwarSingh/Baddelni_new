@@ -6,11 +6,15 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import com.baddelni.baddelni.App
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.Response.Countries.Countries
 import com.baddelni.baddelni.Response.Countries.CountriesItem
 import com.baddelni.baddelni.Response.categories.SingleProductResponse.SingleProductResponse
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
+import com.baddelni.baddelni.categories.response.CreateChatResponse
+import com.baddelni.baddelni.chat.ChatListActivity
+import com.baddelni.baddelni.home.anotherUser.AnotherUserProductList
 import com.baddelni.baddelni.packageSection.MakeOrderActivity
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
@@ -18,10 +22,6 @@ import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import okhttp3.ResponseBody
-import org.joda.time.DateTime
-import org.joda.time.Days
-import org.joda.time.Hours
-import org.joda.time.Minutes
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +36,7 @@ class ProductDetailActivity : AppCompatActivity() {
     private var isMyProduct = false
     private var isFav = false
     private var sliderArray: Array<String>? = null
+
 
     val co: CommonObjects by lazy { CommonObjects(this) }
     override fun attachBaseContext(newBase: Context?) {
@@ -62,10 +63,13 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
            }*/
+
+
         if (isMyProduct) {
             phoneIcon.visibility = View.INVISIBLE
             orderBt.visibility = View.INVISIBLE
         }
+        chatBt.visibility = View.INVISIBLE
 
         backBt.setOnClickListener { finish() }
         orderBt.setOnClickListener {
@@ -116,6 +120,7 @@ class ProductDetailActivity : AppCompatActivity() {
                     if (code!!.isSuccess()) {
 
                         hitProductViewApi(product?.id)
+                        countryTv.text = product?.user?.country?.country
 
                         var currency = "KWD"
 
@@ -188,10 +193,44 @@ class ProductDetailActivity : AppCompatActivity() {
                         }
 
                         makeSlider(sliderList)
+                        //    textView28.text = App.getTimeDetail(this@ProductDetailActivity, product.timestamp!!)
 
-                     /*   val time = getTimeDetail(this@ProductDetailActivity, product.timestamp)
-                        textView28.text = time
-*/
+                        if (App.showUserProducts) {
+                            profileImage.setOnClickListener {
+                                val intent = Intent(this@ProductDetailActivity, AnotherUserProductList::class.java)
+                                intent.putExtra("userId", product.userId.toString())
+                                startActivity(intent)
+                            }
+                        }
+                        App.showUserProducts = true
+
+
+                        chatBt.setOnClickListener {
+                            co.showLoading()
+
+                            Api.getApi().createChatId(
+                                    product.id.toString(),
+                                    co.getStringPrams(),
+                                    product.user?.id.toString(),
+                                    co.getAppLanguage().langCode()
+                            ).enqueue(object : Callback<CreateChatResponse> {
+                                override fun onResponse(call: Call<CreateChatResponse>, response: Response<CreateChatResponse>) {
+                                    startActivity(Intent(this@ProductDetailActivity, ChatListActivity::class.java))
+                                    co.hideLoading()
+                                }
+
+                                override fun onFailure(call: Call<CreateChatResponse>, t: Throwable) {
+                                    co.myToast(t.message)
+                                    Log.e("ResponseFailure: ", t.message)
+                                    t.printStackTrace()
+                                    co.hideLoading()
+                                }
+                            })
+
+
+                        }
+
+
                     }
 
                 }
@@ -211,30 +250,6 @@ class ProductDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun getTimeDetail(context: Context, createdAt: Long?): String {
-        //published_at": "2019-08-09 03:55:35
-
-        /*   val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-           val dateStramp = formatter.parse(createdAt).time
-   */
-        val current = Date().time
-
-        val dt1 = DateTime(createdAt)
-        val dt2 = DateTime(current)
-
-        //val month = Months.monthsBetween(dt1, dt2).months
-        val days = Days.daysBetween(dt1, dt2).days
-        val hours = Hours.hoursBetween(dt1, dt2).hours % 24
-        val mints = Minutes.minutesBetween(dt1, dt2).minutes % 60
-
-        val time = when {
-            days > 0 -> "$days ${context.getString(R.string.days)}"
-            hours > 0 -> "$hours ${context.getString(R.string.hours)}"
-            else -> "$mints ${context.getString(R.string.minutes)}"
-        }
-
-        return time.toLowerCase()
-    }
 
     private fun hitProductViewApi(id: Int?) {
 
@@ -284,3 +299,4 @@ class ProductDetailActivity : AppCompatActivity() {
 
 
 }
+

@@ -1,4 +1,4 @@
-package com.baddelni.baddelni.search
+package com.baddelni.baddelni.home.searchActivity
 
 import android.content.Context
 import android.content.Intent
@@ -9,38 +9,37 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.baddelni.baddelni.R
-import com.baddelni.baddelni.Response.home.MyCountryProductsItem
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.categories.ProductDetailActivity
+import com.baddelni.baddelni.home.searchActivity.response.Data
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 
-class SearchAdapter(val context: Context, val list: List<MyCountryProductsItem>) : RecyclerView.Adapter<SearchAdapter.viewHolder>() {
+class AdapterSearch(val context: Context, val list: List<Data>) : RecyclerView.Adapter<AdapterSearch.viewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_sub_categories, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_sub_categories, parent, false)
         return viewHolder(view)
     }
 
     override fun onBindViewHolder(holder: viewHolder, postion: Int) {
-        val itemData = list[postion]
-
+        val data = list[postion]
         // holder.image.setGlideImageNetworkPath(data.mainImage?.img!!, false)
         val ro = RequestOptions()
                 .centerCrop()
         ro.diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         ro.placeholder(R.mipmap.ic_launcher)
 
-        Glide.with(holder.image)
+        Glide.with(context)
                 .applyDefaultRequestOptions(ro)
-                .load(itemData.mainImage?.img!!)
+                .load(data.mainImage?.img!!)
                 .into(holder.image)
 
 
-        holder.userImage.setGlideImageNetworkPath(itemData.user?.img ?: "")
-        holder.text.text = itemData.user?.name
-        holder.description.text = itemData.name
+        holder.userImage.setGlideImageNetworkPath(data.user?.img ?: "")
+        holder.text.text = data.user?.name
+        holder.description.text = data.name
 
 
         holder.itemView.setOnClickListener {
