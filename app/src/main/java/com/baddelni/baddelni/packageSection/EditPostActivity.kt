@@ -610,7 +610,7 @@ class EditPostActivity : AppCompatActivity() {
 
     fun getCategoriesData() {
         co.showLoading()
-        Api.getApi().getCategoriesAndSubCats(co.getStringPrams(),co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
+        Api.getApi().getCategoriesAndSubCats(co.getStringPrams(), co.getAppLanguage().langCode()).enqueue(object : Callback<CategoriesResponse> {
 
             override fun onResponse(call: Call<CategoriesResponse>, response: Response<CategoriesResponse>) {
                 val body = response.body()
@@ -640,7 +640,7 @@ class EditPostActivity : AppCompatActivity() {
 
     private fun getData() {
 
-        Api.getApi().singleProduct(pId!!, co.getAppLanguage().langCode()).enqueue(object : Callback<SingleProductResponse> {
+        Api.getApi().singleProduct(co.getStringPrams(), pId, co.getAppLanguage().langCode()).enqueue(object : Callback<SingleProductResponse> {
 
             override fun onResponse(call: Call<SingleProductResponse>, response: Response<SingleProductResponse>) {
                 val body = response.body()

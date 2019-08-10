@@ -55,10 +55,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_profile)
 
-
         intent.extras?.apply {
-
-
             text.setText(getString("name"))
             mail.setText(getString("email"))
             countryId = getInt("countryId", 0)
@@ -71,7 +68,6 @@ class EditProfileActivity : AppCompatActivity() {
 
             intrestRecycler.adapter = AdapterEditIntrests(this@EditProfileActivity, serializable)
         }
-
         getCountyData()
 
 
@@ -136,10 +132,7 @@ class EditProfileActivity : AppCompatActivity() {
                 t.printStackTrace()
                 co.hideLoading()
             }
-
         })
-
-
     }
 
     private fun showPictureDialog() {
@@ -236,11 +229,9 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     fun saveDataToServer() {
-
         co.showLoading()
 
         Api.getApi().updateAccount(createProfileBody()).enqueue(object : Callback<ResponseBody> {
-
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 co.hideLoading()
                 val body = response.body()
@@ -303,8 +294,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         return builder.build()
-
-
     }
 
     override fun attachBaseContext(newBase: Context?) {

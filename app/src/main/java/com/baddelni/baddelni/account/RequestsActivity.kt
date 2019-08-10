@@ -127,15 +127,19 @@ class RequestsActivity : AppCompatActivity() {
                                 pojo.imageUrl = it.user?.img ?: ""
                                 pojo.loaction = it.user?.country?.country ?: ""
                                 pojo.name = it.user?.name ?: ""
+
                             }
+                            pojo.chat = it.chat
                             pojo.statusText = it.status_text ?: getString(R.string.request)
                             pojo.pId = it.productId ?: 0
+                            pojo.uId = it.product2?.userId ?: 0
                             pojo.img1 = it.product1?.mainImage?.img ?: ""
                             pojo.img2 = it.product2?.img ?: ""
                             pojo.p1Name = it.product1?.name ?: ""
                             pojo.p2Name = it.product2?.name ?: ""
                             pojo.description1 = it.product1?.description ?: ""
                             pojo.description2 = it.product2?.description ?: ""
+                            pojo.isFav = it.product1?.fav?.isFavorite() ?: false
                             pojo.isFav = it.product1?.fav?.isFavorite() ?: false
 
                             list.add(pojo)

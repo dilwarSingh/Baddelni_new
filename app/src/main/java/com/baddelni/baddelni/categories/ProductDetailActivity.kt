@@ -13,6 +13,7 @@ import com.baddelni.baddelni.Response.Countries.CountriesItem
 import com.baddelni.baddelni.Response.categories.SingleProductResponse.SingleProductResponse
 import com.baddelni.baddelni.account.setGlideImageNetworkPath
 import com.baddelni.baddelni.categories.response.CreateChatResponse
+import com.baddelni.baddelni.chat.ChatActivity
 import com.baddelni.baddelni.chat.ChatListActivity
 import com.baddelni.baddelni.home.anotherUser.AnotherUserProductList
 import com.baddelni.baddelni.packageSection.MakeOrderActivity
@@ -20,6 +21,7 @@ import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
+import com.baddelni.baddelni.util.NetworkCode
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -69,7 +71,7 @@ class ProductDetailActivity : AppCompatActivity() {
             phoneIcon.visibility = View.INVISIBLE
             orderBt.visibility = View.INVISIBLE
         }
-        chatBt.visibility = View.INVISIBLE
+        //chatBt.visibility = View.INVISIBLE
 
         backBt.setOnClickListener { finish() }
         orderBt.setOnClickListener {
@@ -111,7 +113,7 @@ class ProductDetailActivity : AppCompatActivity() {
     private fun getData(countryList: List<CountriesItem>) {
         co.showLoading()
 
-        Api.getApi().singleProduct(pId!!, co.getAppLanguage().langCode()).enqueue(object : Callback<SingleProductResponse> {
+        Api.getApi().singleProduct(co.getStringPrams(), pId!!, co.getAppLanguage().langCode()).enqueue(object : Callback<SingleProductResponse> {
 
             override fun onResponse(call: Call<SingleProductResponse>, response: Response<SingleProductResponse>) {
                 val body = response.body()
@@ -204,32 +206,42 @@ class ProductDetailActivity : AppCompatActivity() {
                         }
                         App.showUserProducts = true
 
+                        if (chat?.chatId == 0) {
+                            chatBt.setOnClickListener {
+                                co.showLoading()
+                                Api.getApi().createChatId(
+                                        product.id.toString(),
+                                        co.getStringPrams(),
+                                        product.user?.id.toString(),
+                                        co.getAppLanguage().langCode()
+                                ).enqueue(object : Callback<CreateChatResponse> {
+                                    override fun onResponse(call: Call<CreateChatResponse>, response: Response<CreateChatResponse>) {
+                                        val rep = response.body()
+                                        if (rep?.code == NetworkCode.SUCCESS) {
+                                            val intent = Intent(this@ProductDetailActivity, ChatActivity::class.java)
+                                            intent.putExtra("roomId", rep.chatId.toString())
+                                            startActivity(intent)
+                                        }
+                                        co.hideLoading()
+                                    }
 
-                        chatBt.setOnClickListener {
-                            co.showLoading()
-
-                            Api.getApi().createChatId(
-                                    product.id.toString(),
-                                    co.getStringPrams(),
-                                    product.user?.id.toString(),
-                                    co.getAppLanguage().langCode()
-                            ).enqueue(object : Callback<CreateChatResponse> {
-                                override fun onResponse(call: Call<CreateChatResponse>, response: Response<CreateChatResponse>) {
-                                    startActivity(Intent(this@ProductDetailActivity, ChatListActivity::class.java))
-                                    co.hideLoading()
-                                }
-
-                                override fun onFailure(call: Call<CreateChatResponse>, t: Throwable) {
-                                    co.myToast(t.message)
-                                    Log.e("ResponseFailure: ", t.message)
-                                    t.printStackTrace()
-                                    co.hideLoading()
-                                }
-                            })
+                                    override fun onFailure(call: Call<CreateChatResponse>, t: Throwable) {
+                                        co.myToast(t.message)
+                                        Log.e("ResponseFailure: ", t.message)
+                                        t.printStackTrace()
+                                        co.hideLoading()
+                                    }
+                                })
 
 
+                            }
+                        } else {
+                            chatBt.setOnClickListener {
+                                val intent = Intent(this@ProductDetailActivity, ChatActivity::class.java)
+                                intent.putExtra("roomId", chat?.chatId.toString())
+                                startActivity(intent)
+                            }
                         }
-
 
                     }
 

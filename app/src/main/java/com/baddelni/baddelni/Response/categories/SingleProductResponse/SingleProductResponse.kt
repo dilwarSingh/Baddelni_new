@@ -8,6 +8,9 @@ data class SingleProductResponse(
         @field:SerializedName("product")
         val product: Product? = null,
 
+        @field:SerializedName("chat")
+        val chat: ChatResponse? = null,
+
         @field:SerializedName("code")
         val code: NetworkCode? = null
 )

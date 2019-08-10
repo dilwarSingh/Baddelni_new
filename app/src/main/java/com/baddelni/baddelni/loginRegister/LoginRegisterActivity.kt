@@ -70,6 +70,8 @@ class LoginRegisterActivity : AppCompatActivity() {
                 .withPermissions(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.USE_FINGERPRINT,
+                        Manifest.permission.USE_BIOMETRIC,
                         Manifest.permission.CAMERA)
                 .withListener(object : MultiplePermissionsListener {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {

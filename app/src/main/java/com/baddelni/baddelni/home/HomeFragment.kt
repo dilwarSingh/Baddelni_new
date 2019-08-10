@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         }
-        chatBt.visibility = GONE
+   //     chatBt.visibility = GONE
 
         profileImg.setGlideUserImage(co.getStringPrams(AppConstants.IMG_URL))
         username.text = co.getStringPrams(AppConstants.PERSON_NAME)

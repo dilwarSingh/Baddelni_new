@@ -177,6 +177,10 @@ class RegisterFragment : Fragment() {
 
     private fun createProfileBundle(): Bundle {
 
+
+        co.putStringPrams(AppConstants.USER_EMAIL, email.text.toString().trim())
+        co.putStringPrams(AppConstants.USER_PASSWORD, password.text.toString().trim())
+
         return Bundle().apply {
 
             putString("name", text.text.toString().trim())

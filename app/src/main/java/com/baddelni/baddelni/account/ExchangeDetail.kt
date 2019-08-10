@@ -9,10 +9,13 @@ import com.baddelni.baddelni.MainActivity
 import com.baddelni.baddelni.R
 import com.baddelni.baddelni.account.pojos.pojoRequest
 import com.baddelni.baddelni.categories.ImageListSliderActivity
+import com.baddelni.baddelni.categories.response.CreateChatResponse
+import com.baddelni.baddelni.chat.ChatActivity
 import com.baddelni.baddelni.settings.LocaleHelper
 import com.baddelni.baddelni.util.Api.Api
 import com.baddelni.baddelni.util.AppConstants
 import com.baddelni.baddelni.util.CommonObjects
+import com.baddelni.baddelni.util.NetworkCode
 import com.baddelni.baddelni.util.YesNoInterface
 import kotlinx.android.synthetic.main.exchange_detail.*
 import kotlinx.android.synthetic.main.layout_product_view.view.*
@@ -36,29 +39,29 @@ class ExchangeDetail : AppCompatActivity() {
 
 
         declineBt.setOnClickListener {
-
             co.showYesNoDialog(getString(R.string.decline), getString(R.string.sureDecline), object : YesNoInterface {
                 override fun onClickYes() {
                     confirmScreen(1)
                 }
             })
-
-
         }
         imageView16.setOnClickListener { co.fireCallIntent(phoneNo.text.toString()) }
 
         backBt.setOnClickListener { finish() }
         acceptBt.setOnClickListener { confirmScreen(2) }
 
-     //   include.text.text = ""
+
+        //   include.text.text = ""
         intent.extras?.apply {
             val data = getSerializable("data") as pojoRequest
+
+            chatBt.setOnClickListener { getChat(data) }
 
             profileImg.setGlideImageNetworkPath(data.imageUrl)
             username.text = data.name
             location.text = data.loaction
-            product1.productImage.setGlideImageNetworkPath(data.img1,false)
-            product2.productImage.setGlideImageNetworkPath(data.img2,false)
+            product1.productImage.setGlideImageNetworkPath(data.img1, false)
+            product2.productImage.setGlideImageNetworkPath(data.img2, false)
             orderId = data.orderId
             phoneNo.text = data.phone
 
@@ -87,8 +90,46 @@ class ExchangeDetail : AppCompatActivity() {
 
     }
 
-    private fun confirmScreen(status: Int) {
 
+    private fun getChat(data: pojoRequest) {
+        if (data.chat?.chatId == 0) {
+            co.showLoading()
+            Api.getApi().createChatId(
+                    data.pId.toString(),
+                    co.getStringPrams(),
+                    data.uId.toString(),
+                    co.getAppLanguage().langCode()
+            ).enqueue(object : Callback<CreateChatResponse> {
+                override fun onResponse(call: Call<CreateChatResponse>, response: Response<CreateChatResponse>) {
+                    val rep = response.body()
+                    if (rep?.code == NetworkCode.SUCCESS) {
+                        val intent = Intent(this@ExchangeDetail, ChatActivity::class.java)
+                        intent.putExtra("roomId", rep.chatId.toString())
+                        startActivity(intent)
+                    }
+                    co.hideLoading()
+                }
+
+                override fun onFailure(call: Call<CreateChatResponse>, t: Throwable) {
+                    co.myToast(t.message)
+                    Log.e("ResponseFailure: ", t.message)
+                    t.printStackTrace()
+                    co.hideLoading()
+                }
+            })
+
+
+        } else {
+            chatBt.setOnClickListener {
+                val intent = Intent(this@ExchangeDetail, ChatActivity::class.java)
+                intent.putExtra("roomId", data.chat?.chatId.toString())
+                startActivity(intent)
+            }
+        }
+    }
+
+    
+    private fun confirmScreen(status: Int) {
         co.showLoading()
         Api.getApi().statusOrder(co.getStringPrams(), orderId, status, co.getAppLanguage().langCode()).enqueue(object : Callback<ResponseBody> {
 

@@ -159,5 +159,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/fingureBt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fbCard"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/fbCard"
+        app:layout_constraintStart_toEndOf="@+id/googleCard"
+        app:layout_constraintTop_toTopOf="@+id/fbCard"
+        app:srcCompat="@drawable/ic_fingerprint_black_24dp" />
+
 
 </android.support.constraint.ConstraintLayout>

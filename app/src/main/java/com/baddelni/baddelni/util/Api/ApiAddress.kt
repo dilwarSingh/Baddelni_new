@@ -137,7 +137,7 @@ interface ApiAddress {
 
     @FormUrlEncoded
     @POST("single_product")
-    fun singleProduct(@Field("product_id") product_id: Int, @Field("trans") lang: String): Call<SingleProductResponse>
+    fun singleProduct(@Field("user_id") user_id: String,@Field("product_id") product_id: Int, @Field("trans") lang: String): Call<SingleProductResponse>
 
     @FormUrlEncoded
     @POST("status_order")
@@ -218,5 +218,7 @@ interface ApiAddress {
             @Field("search") search: String,
             @Field("trans") trans: String
     ): Call<SearchResponse>
+
+
 
 }

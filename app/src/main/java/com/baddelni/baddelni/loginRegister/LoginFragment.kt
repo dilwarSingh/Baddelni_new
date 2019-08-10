@@ -2,6 +2,7 @@ package com.baddelni.baddelni.loginRegister
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -39,6 +40,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
 import com.google.gson.Gson
+import com.multidots.fingerprintauth.AuthErrorCodes
+import com.multidots.fingerprintauth.FingerPrintAuthCallback
+import com.multidots.fingerprintauth.FingerPrintAuthHelper
 import kotlinx.android.synthetic.main.fragment_login.*
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -54,6 +58,7 @@ class LoginFragment : Fragment() {
     private lateinit var callbackManager: CallbackManager
     val co: CommonObjects by lazy { CommonObjects(context!!) }
     private lateinit var countryList: List<CountriesItem>
+    private var mFingerPrintAuthHelper: FingerPrintAuthHelper? = null
 
     companion object {
         private const val TAG = "LoginFragment"
@@ -66,13 +71,32 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         getCountyData()
         /*if (co.getAppLanguage().isEnglish()) {
             changeLanguage.text = getString(R.string.english)
         } else {
             changeLanguage.text = getString(R.string.arabic)
         }*/
+        if (co.getStringPrams(AppConstants.USER_EMAIL).isNotEmpty() && co.getStringPrams(AppConstants.USER_PASSWORD).isNotEmpty()) {
+            mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(context!!,
+                    getCallbackListener())
+        } else {
+            fingureBt.visibility = View.INVISIBLE
+        }
 
+        /*   fingureBt.setOnClickListener {
+               if (co.getStringPrams(AppConstants.USER_EMAIL).isNotEmpty() && co.getStringPrams(AppConstants.USER_PASSWORD).isNotEmpty()) {
+                   mFingerPrintAuthHelper = FingerPrintAuthHelper.getHelper(context!!,
+                           getCallbackListener())
+
+                   mFingerPrintAuthHelper.startAuth()
+               } else {
+                   co.showToastDialog(detail = "Please Enter Details Manually", yesNo = null)
+               }
+           }*/
         changeLanguage.setOnClickListener {
 
             co.showLanguageDialog(object : LangListener {
@@ -184,6 +208,59 @@ class LoginFragment : Fragment() {
                 co.showToastDialog(detail = getString(R.string.errorOccurred) + " " + error.message, yesNo = null)
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mFingerPrintAuthHelper?.startAuth()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (mFingerPrintAuthHelper?.isScanning == true)
+            mFingerPrintAuthHelper?.stopAuth()
+    }
+
+
+    private fun getCallbackListener(): FingerPrintAuthCallback {
+        return object : FingerPrintAuthCallback {
+            override fun onNoFingerPrintHardwareFound() {
+                fingureBt.visibility = View.INVISIBLE
+                if (mFingerPrintAuthHelper?.isScanning == true)
+                    mFingerPrintAuthHelper?.stopAuth()
+            }
+
+            override fun onAuthFailed(errorCode: Int, errorMessage: String?) {
+                when (errorCode) {    //Parse the error code for recoverable/non recoverable error.
+                    AuthErrorCodes.CANNOT_RECOGNIZE_ERROR ->
+                        co.myToast("Cannot recognize the fingerprint scanned.")
+                    AuthErrorCodes.NON_RECOVERABLE_ERROR ->
+                        co.myToast("Fingerprint can't be used for auth please try other alternatives")
+                    AuthErrorCodes.RECOVERABLE_ERROR ->
+                        co.myToast(errorMessage)
+                    else -> co.myToast("Fingerprint Sensor Error please try other alternatives")
+                }
+            }
+
+            override fun onNoFingerPrintRegistered() {
+                fingureBt.visibility = View.INVISIBLE
+                if (mFingerPrintAuthHelper?.isScanning == true)
+                    mFingerPrintAuthHelper?.stopAuth()
+            }
+
+            override fun onBelowMarshmallow() {
+                fingureBt.visibility = View.INVISIBLE
+                if (mFingerPrintAuthHelper?.isScanning == true)
+                    mFingerPrintAuthHelper?.stopAuth()
+            }
+
+            override fun onAuthSuccess(cryptoObject: FingerprintManager.CryptoObject?) {
+                emailET.setText(co.getStringPrams(AppConstants.USER_EMAIL))
+                passwordET.setText(co.getStringPrams(AppConstants.USER_PASSWORD))
+                hitLoginApi()
+            }
+
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -435,6 +512,9 @@ class LoginFragment : Fragment() {
 
                     override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                         val body = response.body()
+
+                        co.putStringPrams(AppConstants.USER_EMAIL, emailET.text.toString().trim())
+                        co.putStringPrams(AppConstants.USER_PASSWORD, passwordET.text.toString().trim())
 
                         body?.apply {
 
